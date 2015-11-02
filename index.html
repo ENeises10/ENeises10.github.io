@@ -1,68 +1,197 @@
 <!DOCTYPE html>
-
-<html>
-	<head>
-		<title>Assignment 4 - Home Page</title>
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		
-		<link href="css/bootstrap.min.css" rel="stylesheet">
-		<link href="styles.css" rel="stylesheet">
-		<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-		<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
-	</head>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport"    content="width=device-width, initial-scale=1.0">
 	
-	<body>
-		<ul class="nav nav-tabs navbar-inverse">
-			<li role="presentation" class="active"><a href="index.html">Home</a></li>
-			<li role="presentation"><a href="about.html">About</a></li>
-			<li role="presentation"><a href="contact.html">Contact Form</a></li>
-		</ul>
-		
-		<div class="jumbotron">
+	<title>HomePage</title>
+
+	<link rel="shortcut icon" href="assets/images/gt_favicon.png">
+	
+	<!-- Bootstrap -->
+	<link href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.no-icons.min.css" rel="stylesheet">
+	<!-- Icons -->
+	<link href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+	<!-- Fonts -->
+	<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Alice|Open+Sans:400,300,700">
+	<!-- Custom styles -->
+	<link rel="stylesheet" href="assets/css/styles.css">
+
+	<!--[if lt IE 9]> <script src="assets/js/html5shiv.js"></script> <![endif]-->
+</head>
+<body class="home">
+
+<header id="header">
+	<div id="head" class="parallax" parallax-speed="2">
+		<h1 id="logo" class="text-center">
+			<img class="img-circle" src="assets/images/ENeises.jpg" alt="">
+			<span class="title">Evan Neises</span>
+			<span class="tagline" style="font-size: 19px;">Software Developer<br>
+		</h1>
+		<div class="text-center">
+			<a href="https://www.linkedin.com/in/evanneises"><i class="fa fa-linkedin fa-2x"></i></a>
+			<a href="https://github.com/ENeises10"><i class="fa fa-github fa-2x"></i></a>
+			<a href="https://twitter.com/EvanNeises"><i class="fa fa-twitter fa-2x"></i></a>
+			<a href="https://www.facebook.com/evan.neises"><i class="fa fa-facebook fa-2x"></i></a>
+		</div>
+	</div>
+
+	<nav class="navbar navbar-default navbar-sticky">
 		<div class="container-fluid">
-			<h1>Assignment 4 - Evan Neises</h1>
-			<p>This web page is a sample bootstrap page made for CIS 411 at the University of Louisville.</p>
-		</div></div>
-		
-		<div class="row">
-			<div class="col-sm-4">
-			<h2>CIS 100</h1>
-			<p>This is the first basic CIS class required. It is called Introduction to Microcomputer Applications.</p>
-			<a href="http://htmlaccess.louisville.edu/CrseCatalog/crseDescription.cfm?crseid=012662&career=UGRD&term=4152&section=01&location=BELKNAP" class="btn btn-info" role="button">View Class</a>
+			
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>
 			</div>
-			<div class="col-sm-4">
-			<h2>CIS 150</h2>
-			<p>This is basically an ethics course for CIS. It is called Fundamentals of Information Systems.</p>
-			<a href="http://htmlaccess.louisville.edu/CrseCatalog/crseDescription.cfm?crseid=015110&career=UGRD&term=4152&section=01&location=BELKNAP" class="btn btn-info" role="button">View Class</a>
-			</div>
-			<div class="col-sm-4">
-			<h2>CIS 199</h2>
-			<p>This is an introductory programming class using C#. It is called Software Development I.</p>
-			<a href="http://htmlaccess.louisville.edu/CrseCatalog/crseDescription.cfm?crseid=014213&career=UGRD&term=4152&section=01&location=BELKNAP" class="btn btn-info" role="button">View Class</a>
-			</div>
-		</div>
-	
-		<div class="row">
-			<div class="col-sm-4">
-			<h2>CIS 200</h1>
-			<p>This is the more advanced programming class using C#. It is called Software Development II.</p>
-			<a href="http://htmlaccess.louisville.edu/CrseCatalog/crseDescription.cfm?crseid=014214&career=UGRD&term=4152&section=01&location=BELKNAP" class="btn btn-info" role="button">View Class</a>
-			</div>
-			<div class="col-sm-4">
-			<h2>CIS 300</h2>
-			<p>This is a more advanced version of CIS 100. It is called Computer Information Systems.</p>
-			<a href="http://htmlaccess.louisville.edu/CrseCatalog/crseDescription.cfm?crseid=004608&career=UGRD&term=4152&section=01&location=BELKNAP" class="btn btn-info" role="button">View Class</a>
-			</div>
-			<div class="col-sm-4">
-			<h2>CIS 310</h2>
-			<p>This is a database programming and designing class. It is called Database Design.</p>
-			<a href="http://htmlaccess.louisville.edu/CrseCatalog/crseDescription.cfm?crseid=004609&career=UGRD&term=4152&section=01&location=BELKNAP" class="btn btn-info" role="button">View Class</a>
-			</div>
-		</div>
-		
-		
-	
-	</body>
+			
+			<div class="navbar-collapse collapse">
+				
+				<ul class="nav navbar-nav">
+					<li class="active"><a href="index.html">Home</a></li>
+					<li><a href="#about" id="about">About Me</a></li>
+					<li><a href="#technologies" id="technologies">Technologies</a></li>
+					<li><a href="#resume">Resume</a></li>
+					<!-- <li class="dropdown">
+						<a href="#" class="dropdown-toggle" class="customTabs" data-toggle="dropdown">More Pages <b class="caret"></b></a>
+						<ul class="dropdown-menu">
+							<li><a href="sidebar-left.html">Left Sidebar</a></li>
+							<li><a href="sidebar-right.html">Right Sidebar</a></li>
+							<li><a href="single.html">Blog Post</a></li>
+						</ul>
+					</li> -->
+					<li><a class="customTabs" href="blog.html">Blog</a></li>
+				</ul>
+			
+			</div><!--/.nav-collapse -->			
+		</div>	
+	</nav>
+</header>
 
+<main id="main">
+
+	<div class="container">
+		
+		<div class="row section topspace">
+			<div class="col-md-12">
+				<p class="lead text-center text-muted">"One of the greatest discoveries a man makes, one of his great surprises, is to find he can do what he 				was afraid he couldn't do." - Henry Ford</p>
+			</div>
+		</div> <!-- / section -->
+		
+		<div class="row section featured topspace">
+			<h2 id="about" class="section-title parallax parallax-1"><span>About Me</span></h2>
+			
+			<div class="col-sm-6">
+				I graduated from the University of Louisville on May 10th, 2015 with a Bachelor's of Science in Business Administration with a focus on Computer Information Systems. 
+			</div>
+			<div class="col-sm-6">
+				I currently work at Humana as an applications engineer in downtown Louisville, Kentucky.
+			</div>
+		</div> <!-- / section -->
+		
+		<div class="row section featured topspace">
+			<a name="about"></a>
+			<h2 id="technologies" class="section-title parallax parallax-1"><span>Technologies</span></h2>
+			<div class="row">
+				<div class="col-sm-6 col-md-3">
+					<h3 class="text-center">Custom website design</h3>
+					<p>I don't think they tried to market it to the billionaire, spelunking, base-jumping crowd. i did the same thing to gandhi, he didn't eat for three weeks. i once heard a wise man say there are no perfect men.</p>
+					<p class="text-center"><a href="" class="btn btn-action">Read more</a></p>
+				</div>
+				<div class="col-sm-6 col-md-3">
+					<h3 class="text-center">Wordpress integration</h3>
+					<p>I don't think they tried to market it to the billionaire, spelunking, base-jumping crowd. i did the same thing to gandhi, he didn't eat for three weeks. i once heard a wise man say there are no perfect men.</p>
+					<p class="text-center"><a href="" class="btn btn-action">Read more</a></p>
+				</div>
+				<div class="col-sm-6 col-md-3">
+					<h3 class="text-center">Application development</h3>
+					<p>I don't think they tried to market it to the billionaire, spelunking, base-jumping crowd. i did the same thing to gandhi, he didn't eat for three weeks. i once heard a wise man say there are no perfect men.</p>
+					<p class="text-center"><a href="" class="btn btn-action">Read more</a></p>
+				</div>
+				<div class="col-sm-6 col-md-3">
+					<h3 class="text-center">SEO &amp; SEM services</h3>
+					<p>I don't think they tried to market it to the billionaire, spelunking, base-jumping crowd. i did the same thing to gandhi, he didn't eat for three weeks. i once heard a wise man say there are no perfect men.</p>
+					<p class="text-center"><a href="" class="btn btn-action">Read more</a></p>
+				</div>
+			</div>
+		</div> <!-- / section -->
+		
+		<div class="row section featured topspace">
+			<a name="about"></a>
+			<h2 class="section-title parallax parallax-1"><span>Resume</span></h2>
+			<div class="row">
+				<div class="col-sm-6 col-md-3">
+					<h3 class="text-center">Custom website design</h3>
+					<p>I don't think they tried to market it to the billionaire, spelunking, base-jumping crowd. i did the same thing to gandhi, he didn't eat for three weeks. i once heard a wise man say there are no perfect men.</p>
+					<p class="text-center"><a href="" class="btn btn-action">Read more</a></p>
+				</div>
+				<div class="col-sm-6 col-md-3">
+					<h3 class="text-center">Wordpress integration</h3>
+					<p>I don't think they tried to market it to the billionaire, spelunking, base-jumping crowd. i did the same thing to gandhi, he didn't eat for three weeks. i once heard a wise man say there are no perfect men.</p>
+					<p class="text-center"><a href="" class="btn btn-action">Read more</a></p>
+				</div>
+				<div class="col-sm-6 col-md-3">
+					<h3 class="text-center">Application development</h3>
+					<p>I don't think they tried to market it to the billionaire, spelunking, base-jumping crowd. i did the same thing to gandhi, he didn't eat for three weeks. i once heard a wise man say there are no perfect men.</p>
+					<p class="text-center"><a href="" class="btn btn-action">Read more</a></p>
+				</div>
+				<div class="col-sm-6 col-md-3">
+					<h3 class="text-center">SEO &amp; SEM services</h3>
+					<p>I don't think they tried to market it to the billionaire, spelunking, base-jumping crowd. i did the same thing to gandhi, he didn't eat for three weeks. i once heard a wise man say there are no perfect men.</p>
+					<p class="text-center"><a href="" class="btn btn-action">Read more</a></p>
+				</div>
+			</div>
+		</div> <!-- / section -->
+
+</main>
+
+<footer id="footer">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-3 widget">
+				<h3 class="widget-title">Contact</h3>
+				<div class="widget-body">
+					<p>Mobile - (859) 859-1319<br>
+						<a href="mailto:#">evan.neises@gmail.com</a><br>
+						<br>
+						2520 South 3rd Street, Louisville KY 40208
+					</p>	
+				</div>
+			</div>
+
+			<div class="col-md-3 widget">
+				<h3 class="widget-title">Text widget</h3>
+				<div class="widget-body">
+					<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Atque, nihil natus explicabo ipsum quia iste aliquid repellat eveniet velit ipsa sunt libero sed aperiam id soluta officia asperiores adipisci maxime!</p>
+					<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Atque, nihil natus explicabo ipsum quia iste aliquid repellat eveniet velit ipsa sunt libero sed aperiam id soluta officia asperiores adipisci maxime!</p>
+				</div>
+			</div>
+
+		</div> <!-- /row of widgets -->
+	</div>
+</footer>
+
+<footer id="underfooter">
+	<div class="container">
+		<div class="row">
+			
+
+			<div class="col-md-6 widget">
+				<div class="widget-body">
+					<p class="text-left">
+						Copyright &copy; 2015, Evan Neises<br> 
+					</p>
+				</div>
+			</div>
+
+		</div> <!-- /row of widgets -->
+	</div>
+</footer>
+
+
+
+<!-- JavaScript libs are placed at the end of the document so the pages load faster -->
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+<script src="assets/js/template.js"></script>
+<script src="assets/js/custom.js"></script>
+</body>
 </html>
