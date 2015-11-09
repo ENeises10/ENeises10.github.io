@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+
+<html>
+	<head>
+		<link href="styles.css" rel="stylesheet">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		
+		<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+		<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+	</head>
+	
+	<body>
+	
+	<div class="row text-center">
+		<img src="angular.png">
+	</div><br>
+	
+    <div class="container">
+	<div class="row">
+	
+	<div class="col-sm-8 blog-main">
+
+          <div class="blog-post">
+            <h2 class="blog-post-title">AngularJS 101</h2>
+            <p class="blog-post-meta">February 11th by <a href="https://github.com/ENeises10">Evan</a></p>
+
+            <p>This tutorial will show you the basics of AngularJS and how to get started with it.</p>
+            <hr>
+ 
+            <h3>Adding Angular to your HTML file</h3>
+			<p>First, you need to start by creating a new html page. Make sure to add your &lthtml&gt, &lthead&gt, and &ltbody&gt tags.</p>
+            <p>After creating an index page, you need to insert the code below into your head section.</p>
+            <pre><code>&ltscript src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.26/angular.min.js"&gt&lt/script&gt</code></pre>
+            <h3>What You Should Already Know</h3>
+            <p>Before you start using AngularJS, you should have a basic understanding of:</p>
+            <ul>
+              <li>HTML</li>
+              <li>CSS</li>
+              <li>JavaScript</li>
+            </ul>
+			<h3>Getting Started</h3>
+            <h4>Angular Directives</h4>
+            <ul>
+              <li>ng-app: Defines the application and tells AngularJS which element is the owner.</li>
+              <li>ng-model: Binds the value of HTML controls to application data.</li>
+              <li>ng-bind: Binds application data to the HTML view.</li>
+			  <li>ng-init: Initializes Angular application variables.</li>
+            </ul><br>
+			<h4>Angular Expressions</h4>
+            <ul>
+              <li><strong>{{Expressions}}</strong> are written in brackets and bind data to HTML similar to ng-bind directive.</li>
+			  <li>Expressions output data directly where they are written such as below.</li>
+            </ul>
+			<pre><code>&ltp&gtThis is an example expression: {{5 + 10}}&ltp&gt</code></pre><br>
+			<h4>Angular Controllers</h4>
+            <ul>
+              <li><strong>Controllers</strong> are used to control Angular applications</li>
+			  <li>ng-controller defines the controller. Below is an example</li>
+            </ul>
+			<img src="ControllerImg.png" style="border: 1px solid black"><br><br>
+			<h4>Angular Filters</h4>
+            <ul>
+              <li><strong>Controllers</strong> are used to transform data.</li>
+			  <li>Filters include: currency, filter, lowercase, orderBy, and uppercase.</li>
+			  <li>One example of a helpful filter is currency, as seen below.</li>
+            </ul>
+			<pre><code>&ltdiv ng-app="" ng-controller="costController"&gt
+	&ltinput type="number" ng-model="quantity"&gt
+	&ltinput type="number" ng-model="price"&gt
+	&ltp&gtTotal = {{ (quantity * price) | currency }}&lt/p&gt
+&lt/div&gt
+				</code></pre><br>
+			<p>This is a basic intro to Angular, but there are so many more features and things to learn!</p><br>
+			<h4>Thank you for reading my tutorial!</h4>
+			<p>For more information on AngularJS, please visit the links on the side of the page.</p>
+            
+          </div>
+		  
+
+        </div>
+        
+	<div class="col-sm-3 col-sm-offset-1 blog-sidebar">
+          <div class="sidebar-module sidebar-module-inset">
+            <h4>About</h4>
+            <p>AngularJS is a toolset for building the framework most suited to your application development. It is fully extensible and works well with other libraries. Every feature can be modified or replaced to suit your unique development workflow and feature needs.</p>
+          </div>
+          <div class="sidebar-module">
+            <h4>Helpful Links</h4>
+            <ol class="list-unstyled">
+              <li><a href="https://angularjs.org/">AngularJS</a></li>
+              <li><a href="http://www.w3schools.com/angular/">W3 Schools Angular Tutorial</a></li>
+			  <li><a href="">List of Tutorials</a></li>
+              <li><a href="http://en.wikipedia.org/wiki/AngularJS">Wikipedia Page</a></li>
+			  <li><a href="https://www.youtube.com/user/angularjs">YouTube Page</a></li>
+			  
+            </ol>
+          </div>
+
+        </div>
+		
+
+
+		
+	</div>
+	</div>
+	
+	</body>
+
+</html>
