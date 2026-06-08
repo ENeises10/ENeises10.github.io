@@ -1,0 +1,830 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Seattle World Cup Guide</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,700;1,300&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--green:#2D6A4F;--green-light:#40916C;--green-pale:#D8F3DC;--gold:#F4A261;--gold-light:#FFCB77;--red:#E63946;--navy:#0A1628;--navy-mid:#132240;--cream:#FAF7F2;--text:#1A1A2E;--muted:#6B7280;--card-bg:#FFFFFF;--border:#E5E7EB}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--text);min-height:100vh}
+.hero{background:var(--navy);color:white;padding:48px 24px 36px;text-align:center;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(45deg,transparent,transparent 30px,rgba(255,255,255,.03) 30px,rgba(255,255,255,.03) 60px)}
+.hero-ball{font-size:56px;display:block;margin-bottom:12px;animation:spin 6s linear infinite}
+@keyframes spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+.hero h1{font-family:'Bebas Neue',sans-serif;font-size:clamp(42px,10vw,80px);letter-spacing:3px;line-height:1;background:linear-gradient(135deg,#fff 40%,var(--gold-light));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero-sub{font-size:14px;letter-spacing:4px;text-transform:uppercase;color:var(--gold-light);margin-top:8px;font-weight:500}
+.hero-dates{display:inline-flex;gap:8px;margin-top:20px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);border-radius:100px;padding:8px 20px;font-size:13px;font-family:'DM Mono',monospace;color:rgba(255,255,255,.8)}
+.hero-pill{background:var(--red);color:white;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:4px 10px;border-radius:100px;margin-left:8px;animation:pulse 2s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.6}}
+.day-nav{position:sticky;top:0;z-index:100;background:var(--navy-mid);border-bottom:2px solid var(--green);overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+.day-nav::-webkit-scrollbar{display:none}
+.day-nav-inner{display:flex;min-width:max-content;padding:0 16px}
+.day-btn{display:flex;flex-direction:column;align-items:center;gap:2px;padding:12px 20px;background:none;border:none;cursor:pointer;color:rgba(255,255,255,.55);font-family:'DM Sans',sans-serif;font-size:11px;font-weight:500;letter-spacing:1px;text-transform:uppercase;border-bottom:3px solid transparent;transition:all .2s;white-space:nowrap}
+.day-btn .day-num{font-family:'Bebas Neue',sans-serif;font-size:22px;line-height:1;letter-spacing:1px}
+.day-btn:hover{color:white}
+.day-btn.active{color:var(--gold-light);border-bottom-color:var(--gold)}
+.day-btn.game-day{color:var(--red)}
+.day-btn.game-day .day-num{color:var(--red)}
+.day-btn.game-day.active{color:var(--red);border-bottom-color:var(--red)}
+.main{max-width:900px;margin:0 auto;padding:0 16px 64px}
+.day-section{display:none;padding-top:32px}
+.day-section.active{display:block;animation:fadeIn .3s ease}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.day-header{display:flex;align-items:flex-end;gap:16px;margin-bottom:20px;padding-bottom:16px;border-bottom:2px solid var(--border);flex-wrap:wrap}
+.day-header-date{font-family:'Bebas Neue',sans-serif;font-size:64px;line-height:1;color:var(--green);letter-spacing:2px}
+.day-header-info{flex:1}
+.day-header-info h2{font-family:'Bebas Neue',sans-serif;font-size:28px;letter-spacing:2px;color:var(--navy);line-height:1}
+.day-header-info p{font-size:13px;color:var(--muted);margin-top:4px}
+.day-badge{padding:6px 14px;border-radius:100px;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;white-space:nowrap;align-self:center}
+.badge-game{background:var(--red);color:white}
+.badge-res{background:var(--green-pale);color:var(--green)}
+.hood-pill{display:inline-flex;align-items:center;gap:6px;background:var(--navy);color:var(--gold-light);border-radius:100px;padding:6px 14px;font-size:12px;font-weight:600;letter-spacing:1px;text-transform:uppercase;margin-bottom:20px}
+.hood-pill::before{content:'📍';font-size:13px}
+.cat-tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px}
+.cat-btn{padding:7px 16px;border-radius:100px;border:1.5px solid var(--border);background:white;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;cursor:pointer;transition:all .18s;color:var(--muted)}
+.cat-btn:hover{border-color:var(--green-light);color:var(--green)}
+.cat-btn.active{background:var(--green);border-color:var(--green);color:white}
+.cat-btn .ci{margin-right:4px}
+.cat-panel{display:none}
+.cat-panel.active{display:block;animation:fadeIn .2s ease}
+.section-label{font-size:10px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--muted);margin:24px 0 12px;display:flex;align-items:center;gap:8px}
+.section-label::after{content:'';flex:1;height:1px;background:var(--border)}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px}
+.card{background:var(--card-bg);border:1.5px solid var(--border);border-radius:14px;padding:16px;transition:all .2s;position:relative;overflow:hidden}
+.card:hover{border-color:var(--green-light);box-shadow:0 4px 20px rgba(45,106,79,.12);transform:translateY(-2px)}
+.card-type{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+.card-name{font-size:17px;font-weight:700;color:var(--navy);line-height:1.2;margin-bottom:6px}
+.card-desc{font-size:13px;color:var(--muted);line-height:1.5;margin-bottom:10px}
+.card-meta{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.card-rating{font-size:12px;font-weight:600;color:var(--text);display:flex;align-items:center;gap:3px}
+.card-rating::before{content:'★';color:var(--gold)}
+.card-price{font-size:12px;font-family:'DM Mono',monospace;color:var(--green);font-weight:500}
+.card-dist{font-size:11px;color:var(--muted);margin-left:auto}
+.card-tags{margin-top:8px;display:flex;flex-wrap:wrap;gap:4px}
+.tag{display:inline-block;font-size:10px;font-weight:600;letter-spacing:1px;text-transform:uppercase;padding:3px 8px;border-radius:100px}
+.tag-rooftop{background:#E8F5E9;color:#2E7D32}
+.tag-outdoor{background:#E3F2FD;color:#1565C0}
+.tag-seafood{background:#E0F7FA;color:#00695C}
+.tag-craft{background:#FFF3E0;color:#E65100}
+.tag-cocktail{background:#F3E5F5;color:#6A1B9A}
+.tag-must{background:var(--red);color:white}
+.tag-res{background:var(--green-pale);color:var(--green)}
+.tag-speakeasy{background:#1A1A2E;color:#FFCB77}
+.tag-hidden{background:#37003C;color:#e8b4ff}
+.card-accent{position:absolute;top:0;right:0;width:4px;height:100%;border-radius:0 14px 14px 0}
+.ca-green{background:var(--green)}
+.ca-gold{background:var(--gold)}
+.ca-red{background:var(--red)}
+.ca-purple{background:#7b2d8b}
+.act-card{background:var(--navy);color:white;border-radius:14px;padding:20px;margin-bottom:12px}
+.act-card h4{font-size:17px;font-weight:700;margin-bottom:6px}
+.act-card p{font-size:13px;color:rgba(255,255,255,.65);line-height:1.5}
+.act-meta{display:flex;gap:12px;margin-top:10px;flex-wrap:wrap}
+.act-meta-item{font-size:11px;font-family:'DM Mono',monospace;color:var(--gold-light)}
+.directions-card{background:linear-gradient(135deg,#0A1628 0%,#1a2f4a 100%);border:1px solid rgba(244,162,97,.3);border-radius:14px;padding:24px;margin-bottom:20px;color:white}
+.directions-card h3{font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:2px;color:var(--gold-light);margin-bottom:14px}
+.dir-option{display:flex;gap:14px;align-items:flex-start;margin-bottom:14px;padding-bottom:14px;border-bottom:1px solid rgba(255,255,255,.08)}
+.dir-option:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0}
+.dir-icon{font-size:24px;flex-shrink:0;margin-top:2px}
+.dir-content h4{font-size:14px;font-weight:700;color:white;margin-bottom:3px}
+.dir-content p{font-size:13px;color:rgba(255,255,255,.6);line-height:1.5}
+.dir-tags{margin-top:6px;display:flex;flex-wrap:wrap;gap:4px}
+.dtag{display:inline-block;font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:3px 8px;border-radius:100px}
+.dtag-best{background:var(--green);color:white}
+.dtag-easy{background:rgba(255,255,255,.15);color:rgba(255,255,255,.8)}
+.special-banner{background:linear-gradient(135deg,var(--red) 0%,#c1121f 100%);color:white;border-radius:14px;padding:20px 24px;margin-bottom:20px;display:flex;align-items:center;gap:16px}
+.special-banner .icon{font-size:36px;flex-shrink:0}
+.special-banner h3{font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:1px}
+.special-banner p{font-size:13px;opacity:.85;margin-top:4px}
+.res-banner{background:linear-gradient(135deg,var(--green) 0%,#1b4332 100%);color:white;border-radius:14px;padding:20px 24px;margin-bottom:20px;display:flex;align-items:center;gap:16px}
+.res-banner .icon{font-size:36px;flex-shrink:0}
+.res-banner h3{font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:1px}
+.res-banner p{font-size:13px;opacity:.85;margin-top:4px}
+.tips-section{margin-top:48px;background:var(--navy);color:white;border-radius:16px;padding:28px}
+.tips-section h3{font-family:'Bebas Neue',sans-serif;font-size:24px;letter-spacing:2px;color:var(--gold-light);margin-bottom:16px}
+.tips-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:16px}
+.tip-item{font-size:13px;color:rgba(255,255,255,.75);line-height:1.6}
+.tip-item strong{color:white;display:block;margin-bottom:3px}
+@media(max-width:600px){
+  .day-header-date{font-size:48px}
+  .cards{grid-template-columns:1fr}
+  .special-banner,.res-banner{flex-direction:column;align-items:flex-start;gap:8px}
+  .dir-option{flex-direction:column;gap:8px}
+}
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <span class="hero-ball">&#9917;</span>
+  <h1>Seattle World Cup Guide</h1>
+  <div class="hero-sub">Pike Place Market Base Camp</div>
+  <div class="hero-dates">June 16 &ndash; 21, 2026<span class="hero-pill">USA &#9917; FRI 19th</span></div>
+</div>
+
+<nav class="day-nav">
+  <div class="day-nav-inner">
+    <button class="day-btn active" onclick="showDay('tue',this)"><span class="day-num">16</span>TUE</button>
+    <button class="day-btn" onclick="showDay('wed',this)"><span class="day-num">17</span>WED</button>
+    <button class="day-btn" onclick="showDay('thu',this)"><span class="day-num">18</span>THU</button>
+    <button class="day-btn game-day" onclick="showDay('fri',this)"><span class="day-num">19</span>FRI &#9917;</button>
+    <button class="day-btn" onclick="showDay('sat',this)"><span class="day-num">20</span>SAT</button>
+    <button class="day-btn" onclick="showDay('sun',this)"><span class="day-num">21</span>SUN</button>
+  </div>
+</nav>
+
+<div class="main">
+
+<!-- TUESDAY -->
+<div class="day-section active" id="day-tue">
+  <div class="day-header">
+    <div class="day-header-date">16</div>
+    <div class="day-header-info"><h2>Tuesday &middot; Arrival Day</h2><p>Get your bearings &mdash; the market, the waterfront, and the neighborhood right outside your door</p></div>
+  </div>
+  <div class="hood-pill">Pike Place Market &amp; Waterfront</div>
+  <div class="cat-tabs">
+    <button class="cat-btn active" onclick="showCat(this,'tue','morning')"><span class="ci">&#9749;</span>Morning</button>
+    <button class="cat-btn" onclick="showCat(this,'tue','lunch')"><span class="ci">&#127828;</span>Lunch</button>
+    <button class="cat-btn" onclick="showCat(this,'tue','dinner')"><span class="ci">&#127869;</span>Dinner</button>
+    <button class="cat-btn" onclick="showCat(this,'tue','drinks')"><span class="ci">&#127866;</span>Drinks</button>
+    <button class="cat-btn" onclick="showCat(this,'tue','do')"><span class="ci">&#128506;</span>Do</button>
+  </div>
+
+  <div class="cat-panel active" id="tue-morning">
+    <div class="section-label">First morning &mdash; wake up in Seattle</div>
+    <div class="cards">
+      <div class="card"><div class="card-accent ca-green"></div>
+        <div class="card-type">Breakfast &middot; Post Alley</div><div class="card-name">Bacco Cafe</div>
+        <div class="card-desc">Bright caf&eacute; steps from Pike Place with salmon and crab Benedicts, excellent French toast, and solid coffee. Open at 7am &mdash; get there before the market crowds hit.</div>
+        <div class="card-meta"><span class="card-rating">4.5</span><span class="card-price">$$</span><span class="card-dist">~2 min walk</span></div>
+        <div class="card-tags"><span class="tag tag-must">Top Morning Pick</span></div>
+      </div>
+      <div class="card"><div class="card-accent ca-gold"></div>
+        <div class="card-type">Breakfast Sandwich &middot; 1st Ave</div><div class="card-name">Biscuit Bitch</div>
+        <div class="card-desc">Counter-serve biscuit joint with enormous flavor. The Spicy Links Bichwich is famous for a reason. Order ahead online, grab a sidewalk table, and ease into the trip.</div>
+        <div class="card-meta"><span class="card-rating">4.4</span><span class="card-price">$</span><span class="card-dist">~3 min walk</span></div>
+        <div class="card-tags"><span class="tag tag-outdoor">Sidewalk seating</span></div>
+      </div>
+      <div class="card">
+        <div class="card-type">Crumpets &middot; Pike Place</div><div class="card-name">The Crumpet Shop</div>
+        <div class="card-desc">A Pike Place institution. Freshly griddled crumpets with sweet or savory toppings and unlimited tea. Quick, local, and delicious &mdash; a perfect market warmup.</div>
+        <div class="card-meta"><span class="card-rating">4.7</span><span class="card-price">$</span><span class="card-dist">~4 min walk</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="cat-panel" id="tue-lunch">
+    <div class="section-label">Midday &mdash; eat near the market</div>
+    <div class="cards">
+      <div class="card"><div class="card-accent ca-green"></div>
+        <div class="card-type">Chowder &middot; Post Alley</div><div class="card-name">Pike Place Chowder</div>
+        <div class="card-desc">Award-winning clam chowder &mdash; the must-do Seattle lunch. Get the chowder flight. Line wraps around but moves fast. Don't leave Seattle without doing this.</div>
+        <div class="card-meta"><span class="card-rating">4.6</span><span class="card-price">$$</span><span class="card-dist">~4 min walk</span></div>
+        <div class="card-tags"><span class="tag tag-must">Seattle Bucket List</span><span class="tag tag-seafood">Seafood</span></div>
+      </div>
+      <div class="card"><div class="card-accent ca-gold"></div>
+        <div class="card-type">Thai &middot; Downtown</div><div class="card-name">Noi Thai Cuisine</div>
+        <div class="card-desc">Upscale Thai a few blocks south of Pike Place &mdash; beautiful presentation, polished room, excellent pad see ew and curries. An easy and impressive lunch right in the neighborhood.</div>
+        <div class="card-meta"><span class="card-rating">4.4</span><span class="card-price">$$</span><span class="card-dist">~8 min walk</span></div>
+        <div class="card-tags"><span class="tag tag-must">Great Lunch Pick</span></div>
+      </div>
+      <div class="card">
+        <div class="card-type">Waterfront Seafood &middot; Pike Place</div><div class="card-name">Lowell's Restaurant</div>
+        <div class="card-desc">Three floors inside Pike Place. Get a window seat on the upper floor for views of Elliott Bay. King salmon scramble and clam chowder are the moves.</div>
+        <div class="card-meta"><span class="card-rating">4.4</span><span class="card-price">$$</span><span class="card-dist">~4 min walk</span></div>
+        <div class="card-tags"><span class="tag tag-outdoor">Water views</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="cat-panel" id="tue-dinner">
+    <div class="section-label">First dinner &mdash; welcome to Seattle</div>
+    <div class="cards">
+      <div class="card"><div class="card-accent ca-green"></div>
+        <div class="card-type">Seafood + Views &middot; Pike Place</div><div class="card-name">Matt's in the Market</div>
+        <div class="card-desc">Tiny, beloved spot directly above Pike Place with iconic views of the market and the Sound at sunset. PNW seafood done with real care. The quintessential Seattle dinner. Book ahead.</div>
+        <div class="card-meta"><span class="card-rating">4.5</span><span class="card-price">$$$</span><span class="card-dist">~5 min walk</span></div>
+        <div class="card-tags"><span class="tag tag-must">Best First Dinner</span><span class="tag tag-res">Book ahead</span></div>
+      </div>
+      <div class="card"><div class="card-accent ca-gold"></div>
+        <div class="card-type">Italian &middot; Post Alley</div><div class="card-name">The Pink Door</div>
+        <div class="card-desc">No sign &mdash; just an unmarked pink door in Post Alley. Rooftop terrace with water views, excellent pasta, great cocktails, and often live entertainment. Reserve early, this one's a Seattle classic.</div>
+        <div class="card-meta"><span class="card-rating">4.6</span><span class="card-price">$$$</span><span class="card-dist">~2 min walk</span></div>
+        <div class="card-tags"><span class="tag tag-outdoor">Rooftop terrace</span><span class="tag tag-hidden">Hidden entrance</span><span class="tag tag-res">Reserve now</span></div>
+      </div>
+      <div class="card">
+        <div class="card-type">American Seafood &middot; Belltown</div><div class="card-name">Cutters Crabhouse</div>
+        <div class="card-desc">Gorgeous waterfront views on the pier north of Pike Place. Crab dip is elite, steamed clams are excellent. Easier walk-in on a Tuesday than most spots.</div>
+        <div class="card-meta"><span class="card-rating">4.3</span><span class="card-price">$$$</span><span class="card-dist">~8 min walk</span></div>
+        <div class="card-tags"><span class="tag tag-outdoor">Pier water views</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="cat-panel" id="tue-drinks">
+    <div class="section-label">Drinks &mdash; your first Seattle night out</div>
+    <div class="cards">
+      <div class="card"><div class="card-accent ca-green"></div>
+        <div class="card-type">Craft Beer &middot; Waterfront</div><div class="card-name">Old Stove Brewing Co</div>
+        <div class="card-desc">Waterfront brewery a block from Pike Place with stunning outdoor seating and sunset views over Puget Sound. The perfect first-night Seattle beer stop &mdash; grab a flight and watch the ferries.</div>
+        <div class="card-meta"><span class="card-rating">4.5</span><span class="card-price">$$</span><span class="card-dist">~5 min walk</span></div>
+        <div class="card-tags"><span class="tag tag-outdoor">Waterfront sunset views</span><span class="tag tag-craft">Craft Beer</span></div>
+      </div>
+      <div class="card"><div class="card-accent ca-gold"></div>
+        <div class="card-type">Rooftop Bar &middot; Downtown</div><div class="card-name">The Nest (Thompson Hotel)</div>
+        <div class="card-desc">Seattle's best rooftop view &mdash; unobstructed panorama of the Great Wheel, ferry terminal, and Elliott Bay. First-come or reserve the outer terrace. Pricey but unforgettable for night one.</div>
+        <div class="card-meta"><span class="card-rating">4.2</span><span class="card-price">$$$</span><span class="card-dist">~5 min walk</span></div>
+        <div class="card-tags"><span class="tag tag-rooftop">Best rooftop view in Seattle</span></div>
+      </div>
+      <div class="card"><div class="card-accent ca-purple"></div>
+        <div class="card-type">Speakeasy &middot; Belltown</div><div class="card-name">Bathtub Gin &amp; Co.</div>
+        <div class="card-desc">Down a slightly sketchy alley off 2nd Ave, through an unmarked door, into a candlelit basement built in a former hotel boiler room. Gin-forward craft cocktails. Open till 2am nightly.</div>
+        <div class="card-meta"><span class="card-rating">4.4</span><span class="card-price">$$</span><span class="card-dist">~10 min walk</span></div>
+        <div class="card-tags"><span class="tag tag-speakeasy">Speakeasy</span><span class="tag tag-hidden">Alley entrance</span></div>
+      </div>
+      <div class="card">
+        <div class="card-type">Cocktail Bar &middot; Pike Place</div><div class="card-name">The Rabbit Box</div>
+        <div class="card-desc">Tucked below Pike Place &mdash; noir vibes somewhere between Alice in Wonderland and Twin Peaks. Live music some nights, excellent oysters, creative cocktails. A proper neighborhood secret.</div>
+        <div class="card-meta"><span class="card-rating">4.7</span><span class="card-price">$$</span><span class="card-dist">~5 min walk</span></div>
+        <div class="card-tags"><span class="tag tag-hidden">Hidden below the market</span><span class="tag tag-cocktail">Cocktails</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="cat-panel" id="tue-do">
+    <div class="section-label">Tuesday activities</div>
+    <div class="act-card"><h4>&#128031; Wander Pike Place Market</h4><p>Do it early &mdash; before 10am the market belongs to locals and vendors. Watch the fish throwers, grab samples from cheese and jam stalls, find the original Starbucks. Free and endlessly entertaining.</p><div class="act-meta"><span class="act-meta-item">&#128205; Pike Place</span><span class="act-meta-item">&#8987; 1&ndash;2 hrs</span><span class="act-meta-item">&#128176; Free</span></div></div>
+    <div class="act-card"><h4>&#127754; Overlook Walk + Waterfront Stroll</h4><p>The brand-new Overlook Walk connects Pike Place directly to the renovated waterfront &mdash; sweeping views of Puget Sound, the Olympics, and the ferries. Perfect evening wind-down before dinner.</p><div class="act-meta"><span class="act-meta-item">&#128205; Below Pike Place</span><span class="act-meta-item">&#8987; 45 min</span><span class="act-meta-item">&#128176; Free</span></div></div>
+    <div class="act-card"><h4>&#127905; Great Wheel at Dusk</h4><p>The Seattle Great Wheel on Pier 57 gives you 360&deg; views at sunset. Grab beers at Old Stove Brewing first, then walk 10 minutes to the pier. Best-value view in the city.</p><div class="act-meta"><span class="act-meta-item">&#128205; Pier 57 &middot; ~12 min walk</span><span class="act-meta-item">&#8987; 30 min</span><span class="act-meta-item">&#128176; ~$16/person</span></div></div>
+  </div>
+</div>
+
+<!-- WEDNESDAY -->
+<div class="day-section" id="day-wed">
+  <div class="day-header">
+    <div class="day-header-date">17</div>
+    <div class="day-header-info"><h2>Wednesday &middot; Belltown Day</h2><p>Seattle's bar-heavy neighborhood just north of Pike Place &mdash; walk everywhere, eat well, drink better</p></div>
+  </div>
+  <div class="hood-pill">Belltown</div>
+  <div class="cat-tabs">
+    <button class="cat-btn active" onclick="showCat(this,'wed','morning')"><span class="ci">&#9749;</span>Morning</button>
+    <button class="cat-btn" onclick="showCat(this,'wed','lunch')"><span class="ci">&#127828;</span>Lunch</button>
+    <button class="cat-btn" onclick="showCat(this,'wed','dinner')"><span class="ci">&#127869;</span>Dinner</button>
+    <button class="cat-btn" onclick="showCat(this,'wed','drinks')"><span class="ci">&#127866;</span>Drinks</button>
+    <button class="cat-btn" onclick="showCat(this,'wed','do')"><span class="ci">&#128506;</span>Do</button>
+  </div>
+
+  <div class="cat-panel active" id="wed-morning">
+    <div class="section-label">Wednesday morning</div>
+    <div class="cards">
+      <div class="card"><div class="card-accent ca-green"></div>
+        <div class="card-type">Breakfast &middot; Post Alley</div><div class="card-name">Bacco Cafe</div>
+        <div class="card-desc">Back for more &mdash; the crab Benedict and French toast are that good. Grab an outdoor table and plan the Belltown day over coffee.</div>
+        <div class="card-meta"><span class="card-rating">4.5</span><span class="card-price">$$</span><span class="card-dist">~2 min walk</span></div>
+        <div class="card-tags"><span class="tag tag-must">Morning staple</span></div>
+      </div>
+      <div class="card"><div class="card-accent ca-gold"></div>
+        <div class="card-type">24hr Diner &middot; Belltown</div><div class="card-name">The 5 Point Cafe</div>
+        <div class="card-desc">Seattle's most legendary 24-hour diner &mdash; biker bar meets greasy spoon meets local institution. Pancakes, biscuits &amp; gravy, strong coffee, and zero pretense. An original.</div>
+        <div class="card-meta"><span class="card-rating">4.3</span><span class="card-price">$</span><span class="card-dist">~12 min walk</span></div>
+        <div class="card-tags"><span class="tag tag-must">Only in Seattle</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="cat-panel" id="wed-lunch">
+    <div class="section-label">Belltown lunch</div>
+    <div class="cards">
+      <div class="card"><div class="card-accent ca-green"></div>
+        <div class="card-type">Mexican &middot; Belltown</div><div class="card-name">Maiz Molino</div>
+        <div class="card-desc">Tiny vibrant Mexican spot specializing in mole and masa &mdash; purple tortillas, chilaquiles, duck confit mole. Feels like it was transplanted from Mexico City. A local obsession and genuinely one of a kind.</div>
+        <div class="card-meta"><span class="card-rating">4.4</span><span class="card-price">$$</span><span class="card-dist">~15 min walk</span></div>
+        <div class="card-tags"><span class="tag tag-must">Best Mexican in the Area</span></div>
+      </div>
+      <div class="card">
+        <div class="card-type">Mexican &middot; Belltown</div><div class="card-name">Hatch Cantina</div>
+        <div class="card-desc">New Mexican &mdash; not Mexican-Mexican. The owner's from Durango using grandma's recipes. Green chile cheeseburger is the official state food of New Mexico and this version is legit. Strong margaritas.</div>
+        <div class="card-meta"><span class="card-rating">4.3</span><span class="card-price">$$</span><span class="card-dist">~12 min walk</span></div>
+        <div class="card-tags"><span class="tag tag-craft">Green Chile Specialist</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="cat-panel" id="wed-dinner">
+    <div class="section-label">Wednesday dinner &mdash; stay in Belltown</div>
+    <div class="cards">
+      <div class="card"><div class="card-accent ca-green"></div>
+        <div class="card-type">American Seafood &middot; Pier 67</div><div class="card-name">Six Seven Restaurant</div>
+        <div class="card-desc">Floor-to-ceiling water views on Pier 67. Excellent PNW salmon, crab, and scallops. Upscale but not stuffy &mdash; a relaxed, scenic Wednesday dinner that doesn't need a reservation to feel special.</div>
+        <div class="card-meta"><span class="card-rating">4.5</span><span class="card-price">$$$</span><span class="card-dist">~15 min walk</span></div>
+        <div class="card-tags"><span class="tag tag-outdoor">360&deg; water views</span><span class="tag tag-res">Book ahead</span></div>
+      </div>
+      <div class="card"><div class="card-accent ca-gold"></div>
+        <div class="card-type">Mexican &middot; Belltown</div><div class="card-name">Villa Escondida</div>
+        <div class="card-desc">Looks like a bar from the outside &mdash; the good stuff is in the back. Authentic birria, mole, enchiladas verdes. Incredible prices, strong margaritas, warm staff. A hidden gem on 1st Ave.</div>
+        <div class="card-meta"><span class="card-rating">4.5</span><span class="card-price">$</span><span class="card-dist">~12 min walk</span></div>
+        <div class="card-tags"><span class="tag tag-hidden">Hidden gem</span><span class="tag tag-must">Best bang for buck</span></div>
+      </div>
+      <div class="card">
+        <div class="card-type">Italian &middot; Downtown</div><div class="card-name">Carmine's &ndash; 5th Avenue</div>
+        <div class="card-desc">Dramatic old-world Italian with a chandelier room and serious hospitality. Steak tartare, lobster pappardelle, ravioli di ossobuco. A splurge-worthy Wednesday night. Book it.</div>
+        <div class="card-meta"><span class="card-rating">4.5</span><span class="card-price">$$$</span><span class="card-dist">~8 min walk</span></div>
+        <div class="card-tags"><span class="tag tag-must">Splurge Option</span><span class="tag tag-res">Book ahead</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="cat-panel" id="wed-drinks">
+    <div class="section-label">Belltown bar crawl &mdash; this neighborhood is built for it</div>
+    <div class="cards">
+      <div class="card"><div class="card-accent ca-purple"></div>
+        <div class="card-type">Speakeasy &middot; Belltown</div><div class="card-name">Bathtub Gin &amp; Co.</div>
+        <div class="card-desc">If you skipped it Tuesday &mdash; go tonight. Down an alley off 2nd Ave, candlelit basement in a former hotel boiler room. Craft gin cocktails, intimate and moody. The definition of a hidden bar.</div>
+        <div class="card-meta"><span class="card-rating">4.4</span><span class="card-price">$$</span><span class="card-dist">~10 min walk</span></div>
+        <div class="card-tags"><span class="tag tag-speakeasy">Speakeasy</span><span class="tag tag-hidden">Alley entrance</span></div>
+      </div>
+      <div class="card"><div class="card-accent ca-green"></div>
+        <div class="card-type">Whiskey Bar &middot; Downtown</div><div class="card-name">Diller Room</div>
+        <div class="card-desc">The best whiskey bar in Seattle. Staggering rare bourbon and scotch selection, bartenders who love talking whiskey. If anyone in your group drinks bourbon, this is non-negotiable.</div>
+        <div class="card-meta"><span class="card-rating">4.6</span><span class="card-price">$$</span><span class="card-dist">~8 min walk</span></div>
+        <div class="card-tags"><span class="tag tag-must">Best Whiskey Bar</span></div>
+      </div>
+      <div class="card"><div class="card-accent ca-gold"></div>
+        <div class="card-type">Outdoor Waterfront Bar &middot; Belltown</div><div class="card-name">Pub 70</div>
+        <div class="card-desc">Waterfront bar at the north end of the pier with a big outdoor deck, solid cocktails, water views, and a dog-friendly patio. A real Belltown neighborhood bar &mdash; more relaxed than the tourist spots.</div>
+        <div class="card-meta"><span class="card-rating">4.4</span><span class="card-price">$$</span><span class="card-dist">~15 min walk</span></div>
+        <div class="card-tags"><span class="tag tag-outdoor">Waterfront patio</span></div>
+      </div>
+      <div class="card">
+        <div class="card-type">Cocktail Bar &middot; Belltown</div><div class="card-name">Deep Dive</div>
+        <div class="card-desc">Dark, moody, beautifully lit cocktail bar. Feels like a speakeasy without the gimmick. Creative drinks, excellent burrata, no cover. One of the best cocktail rooms in Seattle.</div>
+        <div class="card-meta"><span class="card-rating">4.3</span><span class="card-price">$$$</span><span class="card-dist">~10 min walk</span></div>
+        <div class="card-tags"><span class="tag tag-cocktail">Dark &amp; moody vibes</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="cat-panel" id="wed-do">
+    <div class="section-label">Wednesday out and about</div>
+    <div class="act-card"><h4>&#9981; Salish Sea Boat Tour</h4><p>One-hour narrated boat tour from Pier 57. Killer views of the skyline, port, and ferries &mdash; drinks on board. The best non-museum activity in Seattle. Captain Andy is a legend.</p><div class="act-meta"><span class="act-meta-item">&#128205; Pier 57 &middot; ~12 min walk</span><span class="act-meta-item">&#8987; 1 hr</span><span class="act-meta-item">&#128176; ~$35/person</span></div></div>
+    <div class="act-card"><h4>&#127944; Belltown Bar Walk</h4><p>Belltown is one long bar crawl between 1st and 2nd Ave. Walk north from Pike Place and see what catches your eye &mdash; rooftops, hidden doors, neon signs. Check the Crocodile for live music listings too.</p><div class="act-meta"><span class="act-meta-item">&#128205; 1st&ndash;2nd Ave, Belltown</span><span class="act-meta-item">&#8987; Flexible</span><span class="act-meta-item">&#128176; Free to walk</span></div></div>
+  </div>
+</div>
+
+<!-- THURSDAY -->
+<div class="day-section" id="day-thu">
+  <div class="day-header">
+    <div class="day-header-date">18</div>
+    <div class="day-header-info"><h2>Thursday &middot; Capitol Hill + Messina Night</h2><p>Seattle's best neighborhood for food and bars &mdash; then dinner at Messina tonight</p></div>
+    <span class="day-badge badge-res">&#127837; Messina Tonight</span>
+  </div>
+  <div class="hood-pill">Capitol Hill</div>
+  <div class="res-banner">
+    <span class="icon">&#127837;</span>
+    <div><h3>Dinner Tonight: Messina Modern Italian</h3><p>23 Mercer St &mdash; near Seattle Center, ~10 min ride from Capitol Hill. The pasta flight is the move. Ask for Jack. Open from 4pm.</p></div>
+  </div>
+  <div class="cat-tabs">
+    <button class="cat-btn active" onclick="showCat(this,'thu','morning')"><span class="ci">&#9749;</span>Morning</button>
+    <button class="cat-btn" onclick="showCat(this,'thu','lunch')"><span class="ci">&#127828;</span>Lunch</button>
+    <button class="cat-btn" onclick="showCat(this,'thu','drinks')"><span class="ci">&#127866;</span>Pre/Post Drinks</button>
+    <button class="cat-btn" onclick="showCat(this,'thu','do')"><span class="ci">&#128506;</span>Do</button>
+  </div>
+
+  <div class="cat-panel active" id="thu-morning">
+    <div class="section-label">Thursday morning &mdash; head to Capitol Hill</div>
+    <div class="cards">
+      <div class="card"><div class="card-accent ca-green"></div>
+        <div class="card-type">Peruvian Brunch &middot; Post Alley</div><div class="card-name">Chef Joe Brunch</div>
+        <div class="card-desc">Open Thursday&ndash;Sunday. Peruvian-inspired brunch &mdash; Tres Leches pancakes, Pan con Chichar&oacute;n, egg Benedicts with aji amarillo sauce. The most unique brunch near Pike Place. Don't miss it.</div>
+        <div class="card-meta"><span class="card-rating">4.9</span><span class="card-price">$$</span><span class="card-dist">~2 min walk</span></div>
+        <div class="card-tags"><span class="tag tag-must">Thu&ndash;Sun only &mdash; go here</span></div>
+      </div>
+      <div class="card">
+        <div class="card-type">Quick Bite &middot; Pike Place</div><div class="card-name">The Crumpet Shop</div>
+        <div class="card-desc">Quick and satisfying if you want to get moving fast. Vermont crumpet and a tea, then head to Capitol Hill.</div>
+        <div class="card-meta"><span class="card-rating">4.7</span><span class="card-price">$</span><span class="card-dist">~4 min walk</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="cat-panel" id="thu-lunch">
+    <div class="section-label">Capitol Hill lunch &mdash; save room for Messina tonight</div>
+    <div class="cards">
+      <div class="card"><div class="card-accent ca-green"></div>
+        <div class="card-type">Thai &middot; Capitol Hill</div><div class="card-name">Bai Tong Thai Street Cafe</div>
+        <div class="card-desc">Consistently excellent Thai on Capitol Hill &mdash; pineapple fried rice, pad see ew, and a Thai crab omelette that's genuinely special. Lively atmosphere, strong cocktails if you want a midday drink.</div>
+        <div class="card-meta"><span class="card-rating">4.4</span><span class="card-price">$$</span><span class="card-dist">~12 min ride</span></div>
+        <div class="card-tags"><span class="tag tag-must">Top Cap Hill Lunch</span></div>
+      </div>
+      <div class="card"><div class="card-accent ca-gold"></div>
+        <div class="card-type">Italian Lunch &middot; Capitol Hill</div><div class="card-name">Due' Cucina</div>
+        <div class="card-desc">Affordable, authentic Italian on Broadway &mdash; fresh pasta daily, carbonara that rivals Rome. Genuinely incredible for the price. A local obsession. Open for lunch from 11:30am.</div>
+        <div class="card-meta"><span class="card-rating">4.6</span><span class="card-price">$</span><span class="card-dist">~15 min ride</span></div>
+        <div class="card-tags"><span class="tag tag-must">Best value Italian in Seattle</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="cat-panel" id="thu-drinks">
+    <div class="section-label">Pre-Messina cocktails (en route) or post-dinner cap</div>
+    <div class="cards">
+      <div class="card"><div class="card-accent ca-green"></div>
+        <div class="card-type">Rooftop &middot; South Lake Union</div><div class="card-name">ALTITUDE Sky Lounge</div>
+        <div class="card-desc">Rooftop bar at the Astra Hotel with Space Needle views and outdoor fire pits. Perfect pre-Messina drinks since it's en route to Seattle Center. Thursday evenings are relaxed and reservations easier.</div>
+        <div class="card-meta"><span class="card-rating">4.3</span><span class="card-price">$$$</span><span class="card-dist">~10 min ride, near Messina</span></div>
+        <div class="card-tags"><span class="tag tag-rooftop">Space Needle views + fire pits</span></div>
+      </div>
+      <div class="card"><div class="card-accent ca-purple"></div>
+        <div class="card-type">Tiki Cocktail Bar &middot; Capitol Hill</div><div class="card-name">Inside Passage</div>
+        <div class="card-desc">Immersive tiki bar like nothing else in Seattle &mdash; drinks arrive in seashells, custom crates, and theatrical vessels. One comes in a rice cooker. Open Thursdays. Wild, fun, and worth the price for the experience.</div>
+        <div class="card-meta"><span class="card-rating">4.4</span><span class="card-price">$$</span><span class="card-dist">~12 min ride</span></div>
+        <div class="card-tags"><span class="tag tag-hidden">Theatrical tiki experience</span><span class="tag tag-cocktail">Unique drinks</span></div>
+      </div>
+      <div class="card"><div class="card-accent ca-gold"></div>
+        <div class="card-type">Rooftop &middot; SoDo</div><div class="card-name">Firn</div>
+        <div class="card-desc">Stunning rooftop bar with retractable walls and downtown views near the stadiums. Great post-Messina nightcap with skyline views. Opens at 3pm, open Thursdays, exceptional cocktails.</div>
+        <div class="card-meta"><span class="card-rating">4.4</span><span class="card-price">$$$</span><span class="card-dist">~12 min ride</span></div>
+        <div class="card-tags"><span class="tag tag-rooftop">Retractable roof + skyline views</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="cat-panel" id="thu-do">
+    <div class="section-label">Capitol Hill exploration</div>
+    <div class="act-card"><h4>&#127968; Wander Capitol Hill's E Pike St Corridor</h4><p>Seattle's most interesting neighborhood. Walk E Pike St from Broadway east &mdash; independent restaurants, vintage shops, record stores, coffee holes-in-the-wall. Serious energy on a Thursday evening before heading to Messina.</p><div class="act-meta"><span class="act-meta-item">&#128205; E Pike St, Capitol Hill</span><span class="act-meta-item">&#8987; Flexible</span><span class="act-meta-item">&#128176; Free</span></div></div>
+    <div class="act-card"><h4>&#127925; Live Music at Chop Suey or Neumos</h4><p>Capitol Hill has Seattle's best small live music venues. Check show listings at Chop Suey and Neumos for Thursday night &mdash; both are on E Pike St and regularly host great local and touring acts.</p><div class="act-meta"><span class="act-meta-item">&#128205; E Pike St, Capitol Hill</span><span class="act-meta-item">&#8987; Evening</span><span class="act-meta-item">&#128176; ~$10&ndash;25/person</span></div></div>
+  </div>
+</div>
+
+<!-- FRIDAY GAME DAY -->
+<div class="day-section" id="day-fri">
+  <div class="day-header">
+    <div class="day-header-date" style="color:var(--red)">19</div>
+    <div class="day-header-info"><h2>Friday &middot; USA Game Day &#9917;</h2><p>Build to the match &mdash; morning fuel, pre-game energy, then Lumen Field</p></div>
+    <span class="day-badge badge-game">&#9917; USA GAME</span>
+  </div>
+  <div class="hood-pill">Pike Place &rarr; Waterfront &rarr; Lumen Field</div>
+  <div class="special-banner">
+    <span class="icon">&#127482;&#127480;</span>
+    <div><h3>USA World Cup &mdash; Friday June 19th at Lumen Field</h3><p>Lumen Field is 2 miles south of Pike Place. Seattle will be electric. Book any pre-game spots in advance &mdash; the whole city will be out.</p></div>
+  </div>
+  <div class="cat-tabs">
+    <button class="cat-btn active" onclick="showCat(this,'fri','morning')"><span class="ci">&#9749;</span>Morning</button>
+    <button class="cat-btn" onclick="showCat(this,'fri','pregame')"><span class="ci">&#9917;</span>Pre-Game</button>
+    <button class="cat-btn" onclick="showCat(this,'fri','directions')"><span class="ci">&#128506;</span>Getting There</button>
+    <button class="cat-btn" onclick="showCat(this,'fri','postgame')"><span class="ci">&#127881;</span>Post-Game</button>
+  </div>
+
+  <div class="cat-panel active" id="fri-morning">
+    <div class="section-label">Game day fuel up</div>
+    <div class="cards">
+      <div class="card"><div class="card-accent ca-red"></div>
+        <div class="card-type">Peruvian Brunch &middot; Post Alley</div><div class="card-name">Chef Joe Brunch</div>
+        <div class="card-desc">It's Friday &mdash; they're open. Best brunch in the neighborhood. Peruvian egg Benedicts, tres leches pancakes, good energy. The right way to start game day.</div>
+        <div class="card-meta"><span class="card-rating">4.9</span><span class="card-price">$$</span><span class="card-dist">~2 min walk</span></div>
+        <div class="card-tags"><span class="tag tag-must">Game Day Pick</span></div>
+      </div>
+      <div class="card">
+        <div class="card-type">Breakfast Sandwich &middot; 1st Ave</div><div class="card-name">Biscuit Bitch</div>
+        <div class="card-desc">Quick, high-energy, delicious. Spicy biscuit sandwich and coffee &mdash; out in 20 minutes and ready to go. Order ahead online on a busy Friday morning.</div>
+        <div class="card-meta"><span class="card-rating">4.4</span><span class="card-price">$</span><span class="card-dist">~3 min walk</span></div>
+        <div class="card-tags"><span class="tag tag-outdoor">Fast game-day fuel</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="cat-panel" id="fri-pregame">
+    <div class="section-label">Pre-game food and drinks &mdash; build the energy</div>
+    <div class="cards">
+      <div class="card"><div class="card-accent ca-red"></div>
+        <div class="card-type">Brewery &middot; Waterfront</div><div class="card-name">Old Stove Brewing Co</div>
+        <div class="card-desc">Best pre-game stop &mdash; outdoor waterfront seating, great craft beer, solid food. Get there by 3pm to snag outdoor seats before the game-day crowd fills in. Easy walk south toward Lumen Field after.</div>
+        <div class="card-meta"><span class="card-rating">4.5</span><span class="card-price">$$</span><span class="card-dist">~5 min walk</span></div>
+        <div class="card-tags"><span class="tag tag-outdoor">Outdoor waterfront</span><span class="tag tag-craft">Pre-game beers</span></div>
+      </div>
+      <div class="card"><div class="card-accent ca-red"></div>
+        <div class="card-type">Sports Bar &middot; Belltown</div><div class="card-name">Buckley's in Belltown</div>
+        <div class="card-desc">Seattle's go-to sports bar for big games &mdash; screens everywhere, great ribs and burgers, lively crowd. They'll have every World Cup match on. Book or arrive early on game day.</div>
+        <div class="card-meta"><span class="card-rating">4.3</span><span class="card-price">$$</span><span class="card-dist">~12 min walk</span></div>
+        <div class="card-tags"><span class="tag tag-must">World Cup Sports Bar</span></div>
+      </div>
+      <div class="card"><div class="card-accent ca-gold"></div>
+        <div class="card-type">Sports Bar &middot; Seattle Center</div><div class="card-name">Tom's Watch Bar</div>
+        <div class="card-desc">Massive sports bar near Seattle Center with a 100-ft bar and enormous screens. Huge, loud, and electric on game day. Good for a pre-game lunch since it's near Messina's neighborhood too.</div>
+        <div class="card-meta"><span class="card-rating">4.8</span><span class="card-price">$$</span><span class="card-dist">~10 min ride</span></div>
+        <div class="card-tags"><span class="tag tag-must">Best Big Game Energy</span></div>
+      </div>
+      <div class="card">
+        <div class="card-type">Mexican &middot; Belltown</div><div class="card-name">La Llorona Taqueria</div>
+        <div class="card-desc">Lively Mexican taqueria with excellent fish tacos, wet burritos, and strong margaritas. Festive atmosphere with great music &mdash; exactly the vibe you want before a World Cup match. Open until 1:30am Fridays.</div>
+        <div class="card-meta"><span class="card-rating">4.5</span><span class="card-price">$</span><span class="card-dist">~5 min walk</span></div>
+        <div class="card-tags"><span class="tag tag-must">Pre-game tacos + margaritas</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="cat-panel" id="fri-directions">
+    <div class="section-label">How to get from Pike Place to Lumen Field</div>
+    <div class="directions-card">
+      <h3>&#127967; Getting to Lumen Field &middot; ~2 miles south of Pike Place</h3>
+      <div class="dir-option">
+        <div class="dir-icon">&#128647;</div>
+        <div class="dir-content">
+          <h4>Link Light Rail &mdash; Easiest on Game Day</h4>
+          <p>Walk ~8 min south to <strong>Westlake Station</strong> (4th &amp; Pine). Take the 1 Line southbound 2 stops to <strong>Stadium Station</strong> &mdash; Lumen Field is right outside. Runs every 8&ndash;12 min, takes about 10 min total. Expect packed trains on a big game day; leave 30&ndash;45 min before kickoff. Use ORCA card or tap-to-pay with a credit card.</p>
+          <div class="dir-tags"><span class="dtag dtag-best">Best Option</span><span class="dtag dtag-easy">~$3.25 each way &middot; No parking needed</span></div>
+        </div>
+      </div>
+      <div class="dir-option">
+        <div class="dir-icon">&#128694;</div>
+        <div class="dir-content">
+          <h4>Walk the Waterfront &mdash; Most Fun Route</h4>
+          <p>Head down to Alaskan Way and walk south along the waterfront all the way to Lumen Field. Takes about 25&ndash;30 min but it's completely flat, scenic, and you'll pass bars where you can stop for a pre-game drink along the way. <strong>Pro tip:</strong> stop at Old Stove Brewing (5 min from Pike Place) then walk the rest south for maximum vibe.</p>
+          <div class="dir-tags"><span class="dtag dtag-easy">~25&ndash;30 min &middot; Free &middot; Great atmosphere</span></div>
+        </div>
+      </div>
+      <div class="dir-option">
+        <div class="dir-icon">&#128664;</div>
+        <div class="dir-content">
+          <h4>Rideshare (Uber / Lyft)</h4>
+          <p>About 10 min and $10&ndash;15 without traffic. Expect surge pricing and congestion on a big game day. <strong>Drop-off tip:</strong> ask for 1st Ave S &amp; S Royal Brougham Way to avoid the worst stadium traffic. For the ride <em>home</em> after the game, light rail is almost always faster &mdash; post-game Uber surge and wait times can be 20&ndash;30 min.</p>
+          <div class="dir-tags"><span class="dtag dtag-easy">~10 min &middot; $10&ndash;20 &middot; Surge likely post-game</span></div>
+        </div>
+      </div>
+      <div class="dir-option">
+        <div class="dir-icon">&#127866;</div>
+        <div class="dir-content">
+          <h4>The Bar Route &mdash; Walk + Stops (Best if you have 2+ hours)</h4>
+          <p>Start at Old Stove Brewing on the waterfront &rarr; walk south along Alaskan Way, stop at any bar that catches you &rarr; end at <strong>Firn</strong> rooftop bar, which is a 5-minute walk from the stadium gates. Arrive at Firn 90 min before kickoff, have a cocktail with a view of the skyline, then walk over. Peak game-day experience.</p>
+          <div class="dir-tags"><span class="dtag dtag-best">Most fun if you have time</span><span class="dtag dtag-easy">Firn is 5 min from the gates</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="cat-panel" id="fri-postgame">
+    <div class="section-label">Post-game celebration (or consolation)</div>
+    <div class="cards">
+      <div class="card"><div class="card-accent ca-red"></div>
+        <div class="card-type">Rooftop &middot; SoDo</div><div class="card-name">Firn</div>
+        <div class="card-desc">5-min walk from Lumen Field &mdash; rooftop with retractable walls and downtown views. The best immediate post-game spot. Try to get in before the crowd hits. Worth every minute of the line if there is one.</div>
+        <div class="card-meta"><span class="card-rating">4.4</span><span class="card-price">$$$</span><span class="card-dist">~5 min from stadium</span></div>
+        <div class="card-tags"><span class="tag tag-rooftop">Closest rooftop to Lumen Field</span></div>
+      </div>
+      <div class="card"><div class="card-accent ca-red"></div>
+        <div class="card-type">Late Night Bar &middot; Capitol Hill</div><div class="card-name">Pine Box</div>
+        <div class="card-desc">Open till 2am on Fridays. Former mortuary turned bar with great taps, fresh pizza, boozy slushies, and a massive patio. The natural end to a big game night. Rideshare from the stadium (~15 min).</div>
+        <div class="card-meta"><span class="card-rating">4.5</span><span class="card-price">$$</span><span class="card-dist">~15 min ride from stadium</span></div>
+        <div class="card-tags"><span class="tag tag-outdoor">Open till 2am</span><span class="tag tag-hidden">Bar in a mortuary</span></div>
+      </div>
+      <div class="card">
+        <div class="card-type">Sports Bar &middot; Belltown</div><div class="card-name">Buckley's in Belltown</div>
+        <div class="card-desc">Keep the sports energy going &mdash; they'll have other World Cup matches on, the crowd will be celebrating. Great burgers and ribs to absorb the post-game drinks.</div>
+        <div class="card-meta"><span class="card-rating">4.3</span><span class="card-price">$$</span><span class="card-dist">~10 min ride</span></div>
+        <div class="card-tags"><span class="tag tag-craft">Keep the party going</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SATURDAY -->
+<div class="day-section" id="day-sat">
+  <div class="day-header">
+    <div class="day-header-date">20</div>
+    <div class="day-header-info"><h2>Saturday &middot; International District + Capitol Hill</h2><p>Best Chinese food in Seattle, then back to Capitol Hill for a big dinner and night out</p></div>
+  </div>
+  <div class="hood-pill">International District &rarr; Capitol Hill</div>
+  <div class="cat-tabs">
+    <button class="cat-btn active" onclick="showCat(this,'sat','morning')"><span class="ci">&#9749;</span>Morning</button>
+    <button class="cat-btn" onclick="showCat(this,'sat','lunch')"><span class="ci">&#127828;</span>ID Lunch</button>
+    <button class="cat-btn" onclick="showCat(this,'sat','dinner')"><span class="ci">&#127869;</span>Dinner</button>
+    <button class="cat-btn" onclick="showCat(this,'sat','drinks')"><span class="ci">&#127866;</span>Drinks</button>
+    <button class="cat-btn" onclick="showCat(this,'sat','do')"><span class="ci">&#128506;</span>Do</button>
+  </div>
+
+  <div class="cat-panel active" id="sat-morning">
+    <div class="section-label">Saturday morning &mdash; best brunch day of the trip</div>
+    <div class="cards">
+      <div class="card"><div class="card-accent ca-green"></div>
+        <div class="card-type">Peruvian Brunch &middot; Post Alley</div><div class="card-name">Chef Joe Brunch</div>
+        <div class="card-desc">If you haven't been yet &mdash; Saturday is the day. Rocking atmosphere, full menu, warm staff. Go slow, order everything, soak it up. One of the most unique brunch spots in all of Seattle.</div>
+        <div class="card-meta"><span class="card-rating">4.9</span><span class="card-price">$$</span><span class="card-dist">~2 min walk</span></div>
+        <div class="card-tags"><span class="tag tag-must">Saturday brunch pick</span></div>
+      </div>
+      <div class="card"><div class="card-accent ca-gold"></div>
+        <div class="card-type">Dim Sum &middot; International District</div><div class="card-name">Jade Garden Restaurant</div>
+        <div class="card-desc">Classic dim sum in the ID &mdash; open at 9am on Saturdays, carts rolling, authentic and excellent. The rib bites, shrimp stuffed eggplant, and sticky rice are standouts. Go early; it fills fast on weekends.</div>
+        <div class="card-meta"><span class="card-rating">4.2</span><span class="card-price">$</span><span class="card-dist">~12 min ride</span></div>
+        <div class="card-tags"><span class="tag tag-must">Saturday morning dim sum</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="cat-panel" id="sat-lunch">
+    <div class="section-label">International District &mdash; go deep on great food</div>
+    <div class="cards">
+      <div class="card"><div class="card-accent ca-green"></div>
+        <div class="card-type">Thai &middot; International District</div><div class="card-name">E-Jae Pak Mor</div>
+        <div class="card-desc">4.8 stars, and every one deserved. Homemade rice noodle dumplings, bold Thai flavors, modern clean space in the ID. The Pak Mor Yuan (pork-stuffed rice paper) is unlike anything you've had. A Seattle hidden gem.</div>
+        <div class="card-meta"><span class="card-rating">4.8</span><span class="card-price">$$</span><span class="card-dist">~12 min ride</span></div>
+        <div class="card-tags"><span class="tag tag-must">4.8 stars &mdash; don't skip this</span></div>
+      </div>
+      <div class="card"><div class="card-accent ca-gold"></div>
+        <div class="card-type">Cantonese &middot; International District</div><div class="card-name">A+ Hong Kong Kitchen</div>
+        <div class="card-desc">Authentic HK-style caf&eacute; with exceptional brisket noodle soup, clay pot rice, and ginger scallion lo mein. Intimate and no-frills. The broth alone makes the trip to the ID worthwhile.</div>
+        <div class="card-meta"><span class="card-rating">4.5</span><span class="card-price">$</span><span class="card-dist">~12 min ride</span></div>
+        <div class="card-tags"><span class="tag tag-must">Authentic Cantonese</span></div>
+      </div>
+      <div class="card">
+        <div class="card-type">Chinese Noodles &middot; International District</div><div class="card-name">Jufeng Noodle House</div>
+        <div class="card-desc">Packed with flavor &mdash; black pepper udon, spicy wontons, brisket dumplings. Reviewers from Houston say it reminds them of home. General Tso and Mongolian beef are both excellent here.</div>
+        <div class="card-meta"><span class="card-rating">4.6</span><span class="card-price">$$</span><span class="card-dist">~12 min ride</span></div>
+        <div class="card-tags"><span class="tag tag-craft">Noodle specialist</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="cat-panel" id="sat-dinner">
+    <div class="section-label">Saturday night dinner &mdash; Capitol Hill</div>
+    <div class="cards">
+      <div class="card"><div class="card-accent ca-green"></div>
+        <div class="card-type">Italian &middot; Capitol Hill</div><div class="card-name">Spinasse</div>
+        <div class="card-desc">The best pasta in Seattle. Northern Italian, handmade, rotating seasonal menu. The sage butter pasta is legendary. Intimate, romantic, exceptional. Watch them make pasta from the bar. Reserve now &mdash; it books out fast.</div>
+        <div class="card-meta"><span class="card-rating">4.5</span><span class="card-price">$$$</span><span class="card-dist">~12 min ride</span></div>
+        <div class="card-tags"><span class="tag tag-must">Best Pasta in Seattle</span><span class="tag tag-res">Book now</span></div>
+      </div>
+      <div class="card"><div class="card-accent ca-gold"></div>
+        <div class="card-type">Italian &middot; Capitol Hill</div><div class="card-name">Tavolàta Capitol Hill</div>
+        <div class="card-desc">House-stretched pasta, great cocktails, warm and buzzy atmosphere. Espresso martini and tiramisu are some of the best in the city. Great alternative if Spinasse is full &mdash; different vibe, equally great food.</div>
+        <div class="card-meta"><span class="card-rating">4.4</span><span class="card-price">$$$</span><span class="card-dist">~12 min ride</span></div>
+        <div class="card-tags"><span class="tag tag-must">Great Cap Hill Italian</span></div>
+      </div>
+      <div class="card">
+        <div class="card-type">Thai &middot; Capitol Hill</div><div class="card-name">Fern Thai Eatery &amp; Bar</div>
+        <div class="card-desc">Lively Thai bar and restaurant on Capitol Hill &mdash; huge portions, great calamari, excellent duck curry. Open until midnight on Saturdays. The kind of fun, loud dinner that keeps going into the night.</div>
+        <div class="card-meta"><span class="card-rating">4.4</span><span class="card-price">$$</span><span class="card-dist">~12 min ride</span></div>
+        <div class="card-tags"><span class="tag tag-craft">Open till midnight</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="cat-panel" id="sat-drinks">
+    <div class="section-label">Saturday night &mdash; Capitol Hill bar scene</div>
+    <div class="cards">
+      <div class="card"><div class="card-accent ca-purple"></div>
+        <div class="card-type">Speakeasy &middot; Capitol Hill</div><div class="card-name">Paper Fan Cocktail Bar</div>
+        <div class="card-desc">Hidden speakeasy above Biang Biang Noodles on E Pike. Tell the host you're there for Paper Fan and they'll guide you up. Tea-infused cocktails, only 20 seats, intimate and remarkable. $30 reservation deposit &mdash; absolutely worth it.</div>
+        <div class="card-meta"><span class="card-rating">4.6</span><span class="card-price">$$</span><span class="card-dist">~12 min ride</span></div>
+        <div class="card-tags"><span class="tag tag-speakeasy">Enter through noodle restaurant</span><span class="tag tag-hidden">Only 20 seats</span></div>
+      </div>
+      <div class="card"><div class="card-accent ca-green"></div>
+        <div class="card-type">Craft Beer &middot; Capitol Hill</div><div class="card-name">Stoup Brewing Capitol Hill</div>
+        <div class="card-desc">18 rotating taps, patio seating, and food trucks on Saturdays. One of the best brewery taprooms in Seattle &mdash; huge, social, great energy. A perfect place to land after dinner and stay for the night.</div>
+        <div class="card-meta"><span class="card-rating">4.5</span><span class="card-price">$$</span><span class="card-dist">~12 min ride</span></div>
+        <div class="card-tags"><span class="tag tag-outdoor">Patio + Saturday food trucks</span><span class="tag tag-craft">18 taps</span></div>
+      </div>
+      <div class="card"><div class="card-accent ca-gold"></div>
+        <div class="card-type">Rooftop Mexican Bar &middot; Capitol Hill</div><div class="card-name">Cantina del Sol</div>
+        <div class="card-desc">Rooftop Mexican bar on E Pike from the team behind one of Seattle's best cocktail bars. Birria nachos, slushie margaritas, and a DJ on Saturday nights. Exactly right for a June evening.</div>
+        <div class="card-meta"><span class="card-rating">3.8</span><span class="card-price">$$</span><span class="card-dist">~12 min ride</span></div>
+        <div class="card-tags"><span class="tag tag-rooftop">Rooftop &middot; Saturday DJ</span></div>
+      </div>
+      <div class="card">
+        <div class="card-type">Late Night &middot; Capitol Hill</div><div class="card-name">Pine Box</div>
+        <div class="card-desc">Former mortuary, now one of Seattle's best late-night bars. Great taps, fresh pizza, boozy slushies, and a massive outdoor patio. Open till 2am Saturday &mdash; the natural end to a big Capitol Hill night.</div>
+        <div class="card-meta"><span class="card-rating">4.5</span><span class="card-price">$$</span><span class="card-dist">~12 min ride</span></div>
+        <div class="card-tags"><span class="tag tag-hidden">Bar in a mortuary</span><span class="tag tag-outdoor">Open till 2am</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="cat-panel" id="sat-do">
+    <div class="section-label">Saturday adventures</div>
+    <div class="act-card"><h4>&#127749; Golden Gardens Beach at Sunset</h4><p>Seattle's best beach &mdash; watch the sunset over the Olympic Mountains and Puget Sound from the sand. Bring beers (allowed in the park), relax, and watch the light show. About 25 min north in Ballard but absolutely worth it on a clear June evening.</p><div class="act-meta"><span class="act-meta-item">&#128205; Golden Gardens Park, Ballard</span><span class="act-meta-item">&#8987; 1&ndash;2 hrs</span><span class="act-meta-item">&#128176; Free</span></div></div>
+    <div class="act-card"><h4>&#127866; International District Food Walk</h4><p>After lunch in the ID, walk the neighborhood &mdash; it's small and totally walkable. Great bubble tea, pastries, and small shops scattered along S King St. Then head north to Capitol Hill for the evening.</p><div class="act-meta"><span class="act-meta-item">&#128205; S King St, International District</span><span class="act-meta-item">&#8987; 1&ndash;2 hrs</span><span class="act-meta-item">&#128176; Free to walk</span></div></div>
+  </div>
+</div>
+
+<!-- SUNDAY -->
+<div class="day-section" id="day-sun">
+  <div class="day-header">
+    <div class="day-header-date">21</div>
+    <div class="day-header-info"><h2>Sunday &middot; Last Day</h2><p>Slow brunch, final bites, squeeze in anything you missed &mdash; then head home</p></div>
+  </div>
+  <div class="hood-pill">Pike Place &middot; Waterfront &middot; Send-Off</div>
+  <div class="cat-tabs">
+    <button class="cat-btn active" onclick="showCat(this,'sun','morning')"><span class="ci">&#9749;</span>Brunch</button>
+    <button class="cat-btn" onclick="showCat(this,'sun','lunch')"><span class="ci">&#127828;</span>Last Lunch</button>
+    <button class="cat-btn" onclick="showCat(this,'sun','drinks')"><span class="ci">&#127866;</span>Final Drinks</button>
+    <button class="cat-btn" onclick="showCat(this,'sun','do')"><span class="ci">&#128506;</span>Send-Off</button>
+  </div>
+
+  <div class="cat-panel active" id="sun-morning">
+    <div class="section-label">Final morning in Seattle</div>
+    <div class="cards">
+      <div class="card"><div class="card-accent ca-green"></div>
+        <div class="card-type">Peruvian Brunch &middot; Post Alley</div><div class="card-name">Chef Joe Brunch</div>
+        <div class="card-desc">Last chance. Open Sundays. The best brunch near Pike Place &mdash; go slow, order everything. You'll be thinking about these pancakes on the flight home.</div>
+        <div class="card-meta"><span class="card-rating">4.9</span><span class="card-price">$$</span><span class="card-dist">~2 min walk</span></div>
+        <div class="card-tags"><span class="tag tag-must">Final morning pick</span></div>
+      </div>
+      <div class="card"><div class="card-accent ca-gold"></div>
+        <div class="card-type">Bottomless Brunch &middot; Capitol Hill</div><div class="card-name">The Lookout</div>
+        <div class="card-desc">Bottomless mimosa brunch Sundays with a rooftop patio and Space Needle views. Great send-off energy. Honest caveat: go for the mimosas and view, not the food.</div>
+        <div class="card-meta"><span class="card-rating">4.3</span><span class="card-price">$</span><span class="card-dist">~15 min ride</span></div>
+        <div class="card-tags"><span class="tag tag-rooftop">Space Needle views</span><span class="tag tag-outdoor">Bottomless mimosas</span></div>
+      </div>
+      <div class="card">
+        <div class="card-type">Full Breakfast &middot; Pike Place</div><div class="card-name">Sound View Cafe</div>
+        <div class="card-desc">Inside the market with sweeping water views. Clam chowder, solid pancakes, and a prime window seat overlooking Elliott Bay. The most scenic breakfast room in Pike Place.</div>
+        <div class="card-meta"><span class="card-rating">4.3</span><span class="card-price">$$</span><span class="card-dist">~5 min walk</span></div>
+        <div class="card-tags"><span class="tag tag-outdoor">Elliott Bay views</span></div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="cat-panel" id="sun-lunch">
+    <div class="section-label">Last lunch in Seattle &mdash; make it count</div>
+    <div class="cards">
+      <div class="card"><div class="card-accent ca-green"></div>
+        <div class="card-type">Seafood &middot; Pike Place</div><div class="card-name">Matt's in the Market</div>
+        <div class="card-desc">Open for lunch Sunday until 2:30pm. If you missed it earlier &mdash; this is the one. Views of Pike Place and the Sound, exceptional PNW seafood. The perfect Seattle farewell lunch.</div>
+        <div class="card-meta"><span class="card-rating">4.5</span><span class="card-price">$$$</span><span class="card-dist">~5 min walk</span></div>
+        <div class="card-tags"><span class="tag tag-must">Perfect farewell lunch</span><span class="tag tag-res">Book ahead</span></div>
+      </div>
+      <div class="card"><div class="card-accent ca-gold"></div>
+        <div class="card-type">Chowder &middot; Post Alley</div><div class="card-name">Pike Place Chowder</div>
+        <div class="card-desc">Last call on the best clam chowder you'll ever have. Get the flight and a lobster roll. You'll be craving this within a week of getting home.</div>
+        <div class="card-meta"><span class="card-rating">4.6</span><span class="card-price">$$</span><span class="card-dist">~4 min walk</span></div>
+        <div class="card-tags"><span class="tag tag-must">Don't leave without this</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="cat-panel" id="sun-drinks">
+    <div class="section-label">Final drinks before you roll out</div>
+    <div class="cards">
+      <div class="card"><div class="card-accent ca-green"></div>
+        <div class="card-type">Cocktails + Jazz &middot; Pike Place</div><div class="card-name">Zig Zag Cafe</div>
+        <div class="card-desc">Sunday is jazz night at Zig Zag &mdash; low lights, leather booths, exceptional cocktails tucked below Pike Place. The perfect final Seattle drink. Opens at 5pm.</div>
+        <div class="card-meta"><span class="card-rating">4.6</span><span class="card-price">$$</span><span class="card-dist">~5 min walk</span></div>
+        <div class="card-tags"><span class="tag tag-cocktail">Sunday jazz</span><span class="tag tag-hidden">Tucked below the market</span></div>
+      </div>
+      <div class="card"><div class="card-accent ca-gold"></div>
+        <div class="card-type">Whiskey Bar &middot; Downtown</div><div class="card-name">Diller Room</div>
+        <div class="card-desc">If you only hit one cocktail bar this trip, make it this one. Unreal whiskey selection, staff who love their craft. Open every day at 2pm. A Sunday afternoon whiskey tasting is a perfect send-off.</div>
+        <div class="card-meta"><span class="card-rating">4.6</span><span class="card-price">$$</span><span class="card-dist">~8 min walk</span></div>
+        <div class="card-tags"><span class="tag tag-must">Best Whiskey Bar in Seattle</span></div>
+      </div>
+      <div class="card">
+        <div class="card-type">Craft Beer &middot; Capitol Hill</div><div class="card-name">Outer Planet Brewing</div>
+        <div class="card-desc">Space-themed neighborhood brewery open at 2pm Sundays. Cozy, projector movies, games, and great beer. Grab a few cans to take home.</div>
+        <div class="card-meta"><span class="card-rating">4.6</span><span class="card-price">$$</span><span class="card-dist">~12 min ride</span></div>
+        <div class="card-tags"><span class="tag tag-craft">Cans to take home</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="cat-panel" id="sun-do">
+    <div class="section-label">Final things to squeeze in</div>
+    <div class="act-card"><h4>&#128717; Pike Place Market One Last Time</h4><p>Sunday morning before the crowds. Hit Pure Food Fish Market for fresh Dungeness crab or smoked salmon &mdash; they pack it for travel. Take it slow and buy something good to bring home.</p><div class="act-meta"><span class="act-meta-item">&#128205; Pike Place</span><span class="act-meta-item">&#8987; 45 min</span><span class="act-meta-item">&#128176; Free</span></div></div>
+    <div class="act-card"><h4>&#127754; Overlook Walk Farewell</h4><p>One final walk down the Overlook Walk to the waterfront. Grab a coffee, sit on the stairs above Elliott Bay, and watch the ferries. A few minutes of peace before you leave. You'll want to come back.</p><div class="act-meta"><span class="act-meta-item">&#128205; Below Pike Place</span><span class="act-meta-item">&#8987; 30 min</span><span class="act-meta-item">&#128176; Free</span></div></div>
+  </div>
+</div>
+
+<div class="tips-section">
+  <h3>&#9889; Quick Tips for the Trip</h3>
+  <div class="tips-grid">
+    <div class="tip-item"><strong>Book These Now</strong>Matt's in the Market, The Pink Door, Spinasse, Tavolata, Paper Fan Cocktail Bar &mdash; all fill up fast during World Cup week.</div>
+    <div class="tip-item"><strong>Unique Bar Hits</strong>Bathtub Gin (alley speakeasy), Paper Fan (above a noodle restaurant), The Rabbit Box (noir below the market), Inside Passage (theatrical tiki), Zig Zag (jazz below Pike Place).</div>
+    <div class="tip-item"><strong>Game Day Transit</strong>Light rail to Stadium Station is the easiest call. Walk the waterfront if you have 2+ hours. Firn rooftop is a 5-min walk from Lumen Field.</div>
+    <div class="tip-item"><strong>Old Stove Pro Tip</strong>Outdoor waterfront seats fill by 5pm on sunny days. Go early, order beers, watch the ferries and Olympics sunset.</div>
+    <div class="tip-item"><strong>Seattle in June</strong>Highs 65&ndash;75&deg;F, very little rain. Pack one light layer for evenings &mdash; June nights cool after 9pm.</div>
+    <div class="tip-item"><strong>Pike Place Timing</strong>Before 10am or after 4pm. Chef Joe Brunch opens at 10am Thu&ndash;Sun &mdash; get there at open to beat the crowd.</div>
+  </div>
+</div>
+
+</div>
+
+<script>
+function showDay(day, btn) {
+  document.querySelectorAll('.day-section').forEach(function(s) { s.classList.remove('active'); });
+  document.querySelectorAll('.day-btn').forEach(function(b) { b.classList.remove('active'); });
+  document.getElementById('day-' + day).classList.add('active');
+  btn.classList.add('active');
+  window.scrollTo({ top: document.querySelector('.day-nav').offsetTop - 10, behavior: 'smooth' });
+}
+function showCat(btn, day, cat) {
+  var section = document.getElementById('day-' + day);
+  section.querySelectorAll('.cat-btn').forEach(function(b) { b.classList.remove('active'); });
+  section.querySelectorAll('.cat-panel').forEach(function(p) { p.classList.remove('active'); });
+  btn.classList.add('active');
+  var panel = document.getElementById(day + '-' + cat);
+  if (panel) panel.classList.add('active');
+}
+</script>
+</body>
+</html>
