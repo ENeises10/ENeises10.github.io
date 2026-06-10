@@ -1,0 +1,1044 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Siesta Key · Family Guide · June 28 – July 5</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --sand: #F5EDD9;
+    --sand-dark: #EAD9B8;
+    --ocean: #1A5C78;
+    --ocean-light: #2E7A9A;
+    --ocean-pale: #D6ECF4;
+    --coral: #E8653A;
+    --coral-light: #FAEAE3;
+    --palm: #2D6A4F;
+    --palm-light: #D8EDDF;
+    --gold: #C9973A;
+    --gold-light: #FBF0DA;
+    --white: #FEFCF8;
+    --ink: #1C1C1C;
+    --muted: #6B6558;
+    --border: rgba(28,28,28,0.1);
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { background: var(--sand); color: var(--ink); font-family: 'DM Sans', system-ui, sans-serif; font-size: 15px; line-height: 1.6; min-height: 100vh; }
+
+  /* ── PASSWORD GATE ── */
+  #gate {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    background: var(--ocean);
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    padding: 24px;
+  }
+  #gate::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 80% 60% at 50% 110%, rgba(232,101,58,0.28) 0%, transparent 65%),
+      radial-gradient(ellipse 50% 40% at 15% 20%, rgba(255,255,255,0.06) 0%, transparent 60%);
+    pointer-events: none;
+  }
+  .gate-box {
+    background: var(--white);
+    border-radius: 20px;
+    padding: 44px 40px;
+    max-width: 380px;
+    width: 100%;
+    text-align: center;
+    position: relative;
+    box-shadow: 0 24px 64px rgba(0,0,0,0.25);
+  }
+  .gate-icon {
+    font-size: 36px;
+    margin-bottom: 16px;
+    display: block;
+  }
+  .gate-box h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 26px;
+    font-weight: 900;
+    color: var(--ocean);
+    margin-bottom: 6px;
+    line-height: 1.15;
+  }
+  .gate-box h2 em { font-style: italic; color: var(--coral); }
+  .gate-sub {
+    font-size: 13px;
+    color: var(--muted);
+    margin-bottom: 28px;
+    line-height: 1.5;
+  }
+  .gate-input-wrap { position: relative; margin-bottom: 14px; }
+  #pw-input {
+    width: 100%;
+    padding: 13px 44px 13px 16px;
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    font-family: 'DM Mono', monospace;
+    font-size: 15px;
+    color: var(--ink);
+    background: var(--sand);
+    outline: none;
+    transition: border-color 0.15s;
+    letter-spacing: 0.08em;
+  }
+  #pw-input:focus { border-color: var(--ocean); background: var(--white); }
+  #pw-input.error { border-color: var(--coral); animation: shake 0.35s ease; }
+  .toggle-pw {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    color: var(--muted);
+    padding: 4px;
+    line-height: 1;
+  }
+  #gate-btn {
+    width: 100%;
+    padding: 13px;
+    background: var(--ocean);
+    color: var(--white);
+    border: none;
+    border-radius: 10px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    cursor: pointer;
+    transition: background 0.15s, transform 0.1s;
+  }
+  #gate-btn:hover { background: var(--ocean-light); }
+  #gate-btn:active { transform: scale(0.98); }
+  #gate-err {
+    margin-top: 12px;
+    font-size: 12.5px;
+    color: var(--coral);
+    font-weight: 500;
+    min-height: 18px;
+  }
+  @keyframes shake {
+    0%,100% { transform: translateX(0); }
+    20%      { transform: translateX(-6px); }
+    40%      { transform: translateX(6px); }
+    60%      { transform: translateX(-4px); }
+    80%      { transform: translateX(4px); }
+  }
+
+  /* Main content hidden until unlocked */
+  #main-content { display: none; }
+
+  .hero { background: var(--ocean); color: var(--white); padding: 60px 32px 52px; text-align: center; position: relative; overflow: hidden; }
+  .hero::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse 80% 60% at 50% 120%, rgba(232,101,58,0.25) 0%, transparent 70%), radial-gradient(ellipse 60% 40% at 20% 30%, rgba(255,255,255,0.06) 0%, transparent 60%); pointer-events: none; }
+  .hero-eyebrow { font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(255,255,255,0.6); margin-bottom: 16px; }
+  .hero h1 { font-family: 'Playfair Display', serif; font-size: clamp(38px, 7vw, 72px); font-weight: 900; line-height: 1.05; letter-spacing: -0.02em; margin-bottom: 12px; }
+  .hero h1 em { font-style: italic; color: #F7C97A; }
+  .hero-sub { font-size: 15px; color: rgba(255,255,255,0.7); max-width: 420px; margin: 0 auto 32px; font-weight: 300; }
+  .hero-meta { display: flex; justify-content: center; gap: 24px; flex-wrap: wrap; }
+  .hero-pill { background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.2); border-radius: 100px; padding: 6px 16px; font-size: 12px; font-weight: 500; letter-spacing: 0.04em; color: rgba(255,255,255,0.9); }
+
+  .wave { display: block; background: var(--ocean); line-height: 0; }
+  .wave svg { display: block; width: 100%; }
+
+  .container { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+
+  .day-nav { position: sticky; top: 0; z-index: 100; background: var(--white); border-bottom: 1px solid var(--border); padding: 0 24px; overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+  .day-nav::-webkit-scrollbar { display: none; }
+  .day-nav-inner { display: flex; gap: 0; min-width: max-content; max-width: 1100px; margin: 0 auto; }
+  .day-btn { flex: 0 0 auto; background: none; border: none; cursor: pointer; padding: 14px 18px 12px; font-family: 'DM Sans', sans-serif; font-size: 12px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); border-bottom: 3px solid transparent; transition: color 0.15s, border-color 0.15s; white-space: nowrap; }
+  .day-btn:hover { color: var(--ocean); }
+  .day-btn.active { color: var(--ocean); border-bottom-color: var(--coral); }
+
+  .quick-links { background: var(--ocean-pale); border-bottom: 1px solid rgba(26,92,120,0.15); padding: 10px 24px; overflow-x: auto; scrollbar-width: none; }
+  .quick-links::-webkit-scrollbar { display: none; }
+  .quick-links-inner { display: flex; gap: 8px; min-width: max-content; max-width: 1100px; margin: 0 auto; align-items: center; }
+  .ql-label { font-family: 'DM Mono', monospace; font-size: 10px; text-transform: uppercase; letter-spacing: 0.12em; color: var(--ocean); font-weight: 500; flex: 0 0 auto; margin-right: 4px; }
+  .ql-btn { background: var(--white); border: 1px solid rgba(26,92,120,0.2); border-radius: 100px; padding: 5px 14px; font-size: 12px; font-weight: 500; color: var(--ocean); cursor: pointer; white-space: nowrap; transition: background 0.15s, border-color 0.15s; }
+  .ql-btn:hover, .ql-btn.active-ql { background: var(--ocean); color: var(--white); border-color: var(--ocean); }
+
+  .day-section { display: none; padding: 40px 0 64px; }
+  .day-section.active { display: block; }
+
+  .day-header { display: flex; align-items: flex-end; gap: 20px; margin-bottom: 32px; padding-bottom: 20px; border-bottom: 1px solid var(--border); }
+  .day-number { font-family: 'Playfair Display', serif; font-size: 80px; font-weight: 900; line-height: 1; color: var(--sand-dark); letter-spacing: -0.04em; flex: 0 0 auto; }
+  .day-info { flex: 1; }
+  .day-date { font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted); margin-bottom: 4px; }
+  .day-title { font-family: 'Playfair Display', serif; font-size: 28px; font-weight: 700; color: var(--ocean); line-height: 1.2; }
+  .day-note { margin-top: 6px; font-size: 13px; color: var(--muted); font-style: italic; }
+
+  .cat-group { margin-bottom: 36px; }
+  .cat-header { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
+  .cat-icon { width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 16px; flex: 0 0 auto; }
+  .cat-icon.coffee { background: var(--gold-light); }
+  .cat-icon.food { background: var(--coral-light); }
+  .cat-icon.dinner { background: var(--ocean-pale); }
+  .cat-icon.activity { background: var(--palm-light); }
+  .cat-icon.grocery { background: var(--sand-dark); }
+  .cat-icon.event { background: #FDE8F5; }
+  .cat-title { font-family: 'DM Mono', monospace; font-size: 11px; font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted); }
+
+  .cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 14px; }
+
+  .card { background: var(--white); border: 1px solid var(--border); border-radius: 14px; padding: 18px 20px; transition: box-shadow 0.18s, transform 0.18s; position: relative; overflow: hidden; }
+  .card:hover { box-shadow: 0 6px 24px rgba(0,0,0,0.08); transform: translateY(-2px); }
+  .card-accent { position: absolute; top: 0; left: 0; width: 4px; height: 100%; border-radius: 14px 0 0 14px; }
+  .card-accent.coffee { background: var(--gold); }
+  .card-accent.food { background: var(--coral); }
+  .card-accent.dinner { background: var(--ocean); }
+  .card-accent.activity { background: var(--palm); }
+  .card-accent.grocery { background: var(--gold); }
+  .card-accent.event { background: #C0399A; }
+
+  .card-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 10px; margin-bottom: 6px; }
+  .card-name { font-weight: 600; font-size: 15px; color: var(--ink); line-height: 1.3; }
+  .card-stars { display: flex; align-items: center; gap: 3px; flex: 0 0 auto; }
+  .star-fill { color: var(--gold); font-size: 11px; }
+  .rating-num { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--muted); font-weight: 500; }
+  .card-type { font-size: 11px; color: var(--muted); font-weight: 400; margin-bottom: 8px; letter-spacing: 0.03em; }
+  .card-desc { font-size: 13px; color: #4A4540; line-height: 1.55; margin-bottom: 10px; }
+  .card-footer { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; padding-top: 10px; border-top: 1px solid var(--border); }
+
+  .tag { background: var(--sand); border-radius: 100px; padding: 3px 10px; font-size: 11px; font-weight: 500; color: var(--muted); white-space: nowrap; }
+  .tag.kid { background: var(--palm-light); color: var(--palm); }
+  .tag.wallet { background: var(--gold-light); color: var(--gold); }
+  .tag.hot { background: var(--coral-light); color: var(--coral); }
+  .tag.close { background: var(--ocean-pale); color: var(--ocean); }
+  .tag.dist { background: #F0F0EE; color: #555; font-family: 'DM Mono', monospace; }
+
+  .card-link { margin-left: auto; font-size: 11px; font-weight: 600; color: var(--ocean); text-decoration: none; letter-spacing: 0.04em; white-space: nowrap; }
+  .card-link:hover { text-decoration: underline; }
+
+  .home-dinner { background: var(--ocean); color: var(--white); border-radius: 14px; padding: 22px 24px; margin-bottom: 14px; }
+  .home-dinner h4 { font-family: 'Playfair Display', serif; font-size: 18px; font-weight: 700; margin-bottom: 6px; color: #F7C97A; }
+  .home-dinner p { font-size: 13px; color: rgba(255,255,255,0.8); line-height: 1.55; }
+  .home-dinner .grocery-note { margin-top: 12px; font-size: 12px; background: rgba(255,255,255,0.1); border-radius: 8px; padding: 8px 12px; color: rgba(255,255,255,0.75); }
+
+  .event-banner { background: linear-gradient(135deg, #1A1A6E 0%, #C0399A 100%); color: var(--white); border-radius: 14px; padding: 20px 22px; margin-bottom: 14px; }
+  .event-banner h4 { font-family: 'Playfair Display', serif; font-size: 17px; font-weight: 700; margin-bottom: 6px; color: #FFE87C; }
+  .event-banner p { font-size: 13px; color: rgba(255,255,255,0.85); line-height: 1.55; }
+  .event-banner .ev-meta { margin-top: 10px; display: flex; gap: 8px; flex-wrap: wrap; }
+  .event-banner .ev-tag { background: rgba(255,255,255,0.15); border-radius: 100px; padding: 3px 12px; font-size: 11px; font-weight: 600; color: rgba(255,255,255,0.9); }
+
+  .tips-box { background: var(--palm-light); border: 1px solid rgba(45,106,79,0.2); border-radius: 14px; padding: 18px 20px; margin-top: 8px; }
+  .tips-box h4 { font-weight: 600; font-size: 13px; color: var(--palm); margin-bottom: 8px; }
+  .tips-box ul { list-style: none; display: flex; flex-direction: column; gap: 5px; }
+  .tips-box li { font-size: 12.5px; color: #2A4A3A; padding-left: 16px; position: relative; line-height: 1.5; }
+  .tips-box li::before { content: '→'; position: absolute; left: 0; color: var(--palm); font-size: 11px; }
+
+  .section-rule { border: none; border-top: 1px dashed var(--sand-dark); margin: 28px 0; }
+
+  .site-footer { background: var(--ocean); color: rgba(255,255,255,0.6); text-align: center; padding: 28px 24px; font-size: 12px; font-family: 'DM Mono', monospace; letter-spacing: 0.08em; }
+  .site-footer strong { color: rgba(255,255,255,0.9); }
+
+  @media (max-width: 600px) {
+    .hero { padding: 40px 20px 36px; }
+    .day-number { font-size: 56px; }
+    .day-title { font-size: 22px; }
+    .cards { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- PASSWORD GATE -->
+<div id="gate">
+  <div class="gate-box">
+    <span class="gate-icon">🌊</span>
+    <h2>Siesta Key <em>2026</em></h2>
+    <p class="gate-sub">Family vacation guide · Jun 28 – Jul 5<br>Enter the password to access your trip.</p>
+    <div class="gate-input-wrap">
+      <input id="pw-input" type="password" placeholder="Password" autocomplete="off" />
+      <button class="toggle-pw" onclick="togglePw()" title="Show/hide password">👁</button>
+    </div>
+    <button id="gate-btn" onclick="checkPw()">Unlock Guide →</button>
+    <div id="gate-err"></div>
+  </div>
+</div>
+
+<!-- MAIN CONTENT -->
+<div id="main-content">
+
+<div class="hero">
+  <p class="hero-eyebrow">Family Vacation · Siesta Key, FL</p>
+  <h1>Your <em>Siesta Key</em><br>Playbook</h1>
+  <p class="hero-sub">Coffee, food, activities & dinners — every day, all sorted.</p>
+  <div class="hero-meta">
+    <span class="hero-pill">☀️ Jun 28 – Jul 5</span>
+    <span class="hero-pill">👨‍👩‍👧‍👦 6 Adults + 3 Kids</span>
+    <span class="hero-pill">📍 Midnight Pass & Point of Rocks</span>
+  </div>
+</div>
+<div class="wave"><svg viewBox="0 0 1440 36" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"><path d="M0,18 C360,36 1080,0 1440,18 L1440,36 L0,36 Z" fill="#F5EDD9"/></svg></div>
+
+<!-- DAY NAV -->
+<div class="day-nav">
+  <div class="day-nav-inner">
+    <button class="day-btn active" onclick="showDay('essentials')">🗂 Essentials</button>
+    <button class="day-btn" onclick="showDay('day1')">Sun 6/28</button>
+    <button class="day-btn" onclick="showDay('day2')">Mon 6/29</button>
+    <button class="day-btn" onclick="showDay('day3')">Tue 6/30</button>
+    <button class="day-btn" onclick="showDay('day4')">Wed 7/1</button>
+    <button class="day-btn" onclick="showDay('day5')">Thu 7/2</button>
+    <button class="day-btn" onclick="showDay('day6')">Fri 7/3</button>
+    <button class="day-btn" onclick="showDay('day7')">Sat 7/4</button>
+    <button class="day-btn" onclick="showDay('day8')">Sun 7/5</button>
+  </div>
+</div>
+<div class="quick-links">
+  <div class="quick-links-inner">
+    <span class="ql-label">Jump to →</span>
+    <button class="ql-btn" onclick="jumpTo('coffee')">☕ Coffee</button>
+    <button class="ql-btn" onclick="jumpTo('bfast')">🥞 Breakfast</button>
+    <button class="ql-btn" onclick="jumpTo('lunch')">🌮 Lunch</button>
+    <button class="ql-btn" onclick="jumpTo('dinner')">🍽 Dinner</button>
+    <button class="ql-btn" onclick="jumpTo('activity')">🏄 Activities</button>
+    <button class="ql-btn" onclick="jumpTo('grocery')">🛒 Grocery</button>
+  </div>
+</div>
+
+<div class="container">
+
+<!-- ══════════════════════════════════
+     ESSENTIALS
+══════════════════════════════════ -->
+<div id="essentials" class="day-section active">
+  <div class="day-header">
+    <div class="day-number">⚓</div>
+    <div class="day-info">
+      <div class="day-date">Quick Reference</div>
+      <div class="day-title">Essentials & Always-On Spots</div>
+      <div class="day-note">Your standing reference — spots worth knowing any day of the trip.</div>
+    </div>
+  </div>
+
+  <div id="grocery" class="cat-group">
+    <div class="cat-header"><div class="cat-icon grocery">🛒</div><div class="cat-title">Grocery & Market Runs</div></div>
+    <div class="cards">
+      <div class="card">
+        <div class="card-accent grocery"></div>
+        <div class="card-head"><div class="card-name">Crescent Beach Market</div><div class="card-stars"><span class="star-fill">★</span><span class="rating-num">4.7</span></div></div>
+        <div class="card-type">Local Market · 1211 Old Stickney Point Rd</div>
+        <div class="card-desc">The closest market to your rental — and one of the best little spots on the island. House-made breakfast sandwiches, fresh croissants, custom deli counter, cold drinks, and locally roasted coffee. Staff is warm and genuinely helpful. GF pastry options available.</div>
+        <div class="card-footer"><span class="tag dist">~0.1 mi</span><span class="tag close">📍 Closest to you</span><span class="tag">8 AM – 8 PM</span><a class="card-link" href="https://maps.google.com/?q=Crescent+Beach+Market+Siesta+Key" target="_blank">Map →</a></div>
+      </div>
+      <div class="card">
+        <div class="card-accent grocery"></div>
+        <div class="card-head"><div class="card-name">Morton's Siesta Market</div><div class="card-stars"><span class="star-fill">★</span><span class="rating-num">4.3</span></div></div>
+        <div class="card-type">Grocery + Liquor · 205 Canal Rd, Siesta Village</div>
+        <div class="card-desc">On-island grocery in the Village — stocked with deli, made-to-order sandwiches, beer & liquor, and all the beach snacks and sunscreen you'll need. Good for mid-trip restocks. Open until 10 PM daily.</div>
+        <div class="card-footer"><span class="tag dist">~2.5 mi</span><span class="tag">🏝 In the Village</span><span class="tag wallet">Until 10 PM</span><a class="card-link" href="https://maps.google.com/?q=Morton's+Siesta+Market" target="_blank">Map →</a></div>
+      </div>
+      <div class="card">
+        <div class="card-accent grocery"></div>
+        <div class="card-head"><div class="card-name">Publix · Sarasota Pavilion</div><div class="card-stars"><span class="star-fill">★</span><span class="rating-num">4.6</span></div></div>
+        <div class="card-type">Full Grocery · 6543 S Tamiami Trail</div>
+        <div class="card-desc">Full-size Publix for big grocery runs, specialty items, deli platters, fresh seafood, and bakery. The right stop for stocking up on arrival day or when you need a real supermarket haul. Open 7 AM–10 PM.</div>
+        <div class="card-footer"><span class="tag dist">~1.1 mi</span><span class="tag">🛍 Full stock-up</span><span class="tag">7 AM – 10 PM</span><a class="card-link" href="https://maps.google.com/?q=Publix+Sarasota+Pavilion" target="_blank">Map →</a></div>
+      </div>
+    </div>
+  </div>
+
+  <div id="coffee" class="cat-group">
+    <div class="cat-header"><div class="cat-icon coffee">☕</div><div class="cat-title">Coffee — Any Morning</div></div>
+    <div class="cards">
+      <div class="card">
+        <div class="card-accent coffee"></div>
+        <div class="card-head"><div class="card-name">Mojo Risin' Coffee Co.</div><div class="card-stars"><span class="star-fill">★</span><span class="rating-num">4.6</span></div></div>
+        <div class="card-type">Café · 5251 Ocean Blvd, Siesta Village</div>
+        <div class="card-desc">The go-to coffee spot in the Village. Music-themed atmosphere with excellent lattes, açaí bowls, and fresh muffins. Outdoor seating, opens 7 AM every day. The chai latte and blueberry muffin are standouts.</div>
+        <div class="card-footer"><span class="tag dist">~2.4 mi</span><span class="tag hot">🔥 Village staple</span><span class="tag">7 AM – 5 PM</span><a class="card-link" href="https://maps.google.com/?q=Mojo+Risin+Coffee+Siesta+Key" target="_blank">Map →</a></div>
+      </div>
+      <div class="card">
+        <div class="card-accent coffee"></div>
+        <div class="card-head"><div class="card-name">Parlor Doughnuts</div><div class="card-stars"><span class="star-fill">★</span><span class="rating-num">4.9</span></div></div>
+        <div class="card-type">Donuts + Coffee · 5055 Ocean Blvd</div>
+        <div class="card-desc">Croissant-textured layered doughnuts in bold flavors — Lemon Cheesecake, Chocolate Chocolate, Strawberry Frosted. GF donuts made fresh per order. A guaranteed kid hit. Pick up a box to go for the beach.</div>
+        <div class="card-footer"><span class="tag dist">~2.6 mi</span><span class="tag hot">🍩 4.9 stars</span><span class="tag kid">GF options</span><span class="tag">7 AM – 2 PM</span><a class="card-link" href="https://maps.google.com/?q=Parlor+Doughnuts+Siesta+Key" target="_blank">Map →</a></div>
+      </div>
+      <div class="card">
+        <div class="card-accent coffee"></div>
+        <div class="card-head"><div class="card-name">Bungalow Bagels</div><div class="card-stars"><span class="star-fill">★</span><span class="rating-num">4.5</span></div></div>
+        <div class="card-type">Bagels + Coffee · 6583 Midnight Pass Rd</div>
+        <div class="card-desc">Practically on your doorstep. House-made bagels, cream cheese, and coffee syrups. The jalapeño cheddar bagel gets rave reviews, and the canned coffee is perfect for the beach. Go early on weekends — it fills fast.</div>
+        <div class="card-footer"><span class="tag dist">~0.1 mi</span><span class="tag close">📍 Walkable</span><span class="tag">8 AM – 2 PM</span><a class="card-link" href="https://maps.google.com/?q=Bungalow+Bagels+Siesta+Key" target="_blank">Map →</a></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="tips-box">
+    <h4>🌊 Local Tips</h4>
+    <ul>
+      <li>Crescent Beach and the Point of Rocks area (right near you) is the quieter, more local end of the island. Siesta Public Beach (Village side, 2.4 mi) is the famous white-sand stretch with facilities — get there before 9 AM in July to claim a spot.</li>
+      <li>The Siesta Key Trolley runs the length of the island and is free. Great way to get to the Village without hunting for parking.</li>
+      <li>For 4th of July (Sat 7/4), fireworks launch at ~9:15 PM from Siesta Public Beach — visible from anywhere along Crescent Beach, meaning you can walk from the rental. 20,000–30,000 people attend; get your beach spot by 7:30 PM.</li>
+      <li>Kayaking/paddleboarding is best on the bay side (Midnight Pass, Stickney Point) — much calmer water than the Gulf, and that's where all the wildlife is.</li>
+      <li>Always confirm hours before going — July 4th weekend some spots change hours or close early.</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════
+     DAY 1 — SUN JUNE 28 (ARRIVAL)
+══════════════════════════════════ -->
+<div id="day1" class="day-section">
+  <div class="day-header">
+    <div class="day-number">1</div>
+    <div class="day-info">
+      <div class="day-date">Sunday, June 28</div>
+      <div class="day-title">Arrival Day</div>
+      <div class="day-note">Get settled, stock up, and ease into island time. Keep it low-key.</div>
+    </div>
+  </div>
+  <div id="bfast" class="cat-group">
+    <div class="cat-header"><div class="cat-icon food">🥞</div><div class="cat-title">Morning / Breakfast</div></div>
+    <div class="cards">
+      <div class="card">
+        <div class="card-accent food"></div>
+        <div class="card-head"><div class="card-name">Crescent Beach Market</div><div class="card-stars"><span class="star-fill">★</span><span class="rating-num">4.7</span></div></div>
+        <div class="card-type">Market + Deli · 1211 Old Stickney Point Rd</div>
+        <div class="card-desc">Perfect first stop on arrival. Made-to-order breakfast sandwiches, freshly roasted coffee, croissants, and basic groceries all in one place. Staff is genuinely welcoming. Stock up on snacks for the house while you're at it.</div>
+        <div class="card-footer"><span class="tag dist">~0.1 mi</span><span class="tag close">📍 Closest to rental</span><span class="tag kid">Easy with kids</span><a class="card-link" href="https://maps.google.com/?q=Crescent+Beach+Market+Siesta+Key" target="_blank">Map →</a></div>
+      </div>
+      <div class="card">
+        <div class="card-accent food"></div>
+        <div class="card-head"><div class="card-name">Bungalow Bagels</div><div class="card-stars"><span class="star-fill">★</span><span class="rating-num">4.5</span></div></div>
+        <div class="card-type">Bagels · 6583 Midnight Pass Rd</div>
+        <div class="card-desc">Practically across the street from your rental. House-made bagel sandwiches and coffee that's "probably the best I've ever had" per reviewers. Great for a quick hangry-family fix right after unpacking.</div>
+        <div class="card-footer"><span class="tag dist">~0.1 mi</span><span class="tag close">📍 Walkable</span><span class="tag">8 AM – 2 PM</span><a class="card-link" href="https://maps.google.com/?q=Bungalow+Bagels+Siesta+Key" target="_blank">Map →</a></div>
+      </div>
+    </div>
+  </div>
+  <hr class="section-rule">
+  <div id="lunch" class="cat-group">
+    <div class="cat-header"><div class="cat-icon food">🌮</div><div class="cat-title">Lunch</div></div>
+    <div class="cards">
+      <div class="card">
+        <div class="card-accent food"></div>
+        <div class="card-head"><div class="card-name">Captain Curt's Crab & Oyster Bar</div><div class="card-stars"><span class="star-fill">★</span><span class="rating-num">4.4</span></div></div>
+        <div class="card-type">Seafood · 1200 Old Stickney Point Rd</div>
+        <div class="card-desc">A Siesta Key institution right near the bridge, practically walking distance from you. Famous New England Clam Chowder, big seafood portions, casual waterfront vibe, live music next door. Great first-day crowd-pleaser.</div>
+        <div class="card-footer"><span class="tag dist">~0.1 mi</span><span class="tag close">📍 Super close</span><span class="tag kid">Family-friendly</span><span class="tag">Opens 11 AM</span><a class="card-link" href="https://maps.google.com/?q=Captain+Curt's+Siesta+Key" target="_blank">Map →</a></div>
+      </div>
+      <div class="card">
+        <div class="card-accent food"></div>
+        <div class="card-head"><div class="card-name">Lenny'z Pizza & Island Bar</div><div class="card-stars"><span class="star-fill">★</span><span class="rating-num">4.7</span></div></div>
+        <div class="card-type">Pizza · 6645 Midnight Pass Rd</div>
+        <div class="card-desc">Nearly perfect rating and steps from your rental. Great pizza, garlic knots, live music, and a full bar. The perfect "we're tired from traveling and just need easy, good food" option.</div>
+        <div class="card-footer"><span class="tag dist">~0.2 mi</span><span class="tag hot">🍕 4.7 stars</span><span class="tag">Opens 11 AM</span><a class="card-link" href="https://maps.google.com/?q=Lenny'z+Pizza+Siesta+Key" target="_blank">Map →</a></div>
+      </div>
+    </div>
+  </div>
+  <hr class="section-rule">
+  <div id="dinner" class="cat-group">
+    <div class="cat-header"><div class="cat-icon dinner">🍽</div><div class="cat-title">Dinner</div></div>
+    <div class="home-dinner">
+      <h4>🏠 Suggested: Cook In Tonight</h4>
+      <p>Arrival day is long. Stock up at Publix (1.1 mi) or Crescent Beach Market (0.1 mi) and keep dinner simple. A big pasta night, grilled fish, or pizza delivery from Lenny'z sets the right tone for a relaxed first evening with the whole group.</p>
+      <div class="grocery-note">🛒 Publix at 6543 S Tamiami Trail (~1.1 mi) is best for a large first-night grocery haul. Lenny'z also delivers!</div>
+    </div>
+  </div>
+  <div id="activity" class="cat-group">
+    <div class="cat-header"><div class="cat-icon activity">🏄</div><div class="cat-title">Activity</div></div>
+    <div class="cards">
+      <div class="card">
+        <div class="card-accent activity"></div>
+        <div class="card-head"><div class="card-name">Crescent Beach / Point of Rocks</div></div>
+        <div class="card-desc">Walk out to the beach right from your rental. Point of Rocks has some of the best snorkeling on the key — there's a natural reef shelf. Let the little ones splash and decompress from travel while the adults exhale.</div>
+        <div class="card-footer"><span class="tag dist">~0.3 mi walk</span><span class="tag kid">All ages</span><span class="tag">Free</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════
+     DAY 2 — MON JUNE 29
+══════════════════════════════════ -->
+<div id="day2" class="day-section">
+  <div class="day-header">
+    <div class="day-number">2</div>
+    <div class="day-info">
+      <div class="day-date">Monday, June 29</div>
+      <div class="day-title">Village Brunch + Dolphin Cruise</div>
+      <div class="day-note">Head to the Village for brunch, then get on the water in the afternoon.</div>
+    </div>
+  </div>
+  <div id="coffee" class="cat-group">
+    <div class="cat-header"><div class="cat-icon coffee">☕</div><div class="cat-title">Coffee</div></div>
+    <div class="cards">
+      <div class="card">
+        <div class="card-accent coffee"></div>
+        <div class="card-head"><div class="card-name">Mojo Risin' Coffee Co.</div><div class="card-stars"><span class="star-fill">★</span><span class="rating-num">4.6</span></div></div>
+        <div class="card-type">Café · 5251 Ocean Blvd, Village</div>
+        <div class="card-desc">Start your first full day with Village coffee. Get the chai latte or iced coffee, grab a smoothie bowl or muffin. The outdoor seating is perfect for a relaxed morning before brunch.</div>
+        <div class="card-footer"><span class="tag dist">~2.4 mi</span><span class="tag hot">☕ Village icon</span><span class="tag">7 AM – 5 PM</span><a class="card-link" href="https://maps.google.com/?q=Mojo+Risin+Coffee+Siesta+Key" target="_blank">Map →</a></div>
+      </div>
+    </div>
+  </div>
+  <div id="bfast" class="cat-group">
+    <div class="cat-header"><div class="cat-icon food">🥞</div><div class="cat-title">Brunch</div></div>
+    <div class="cards">
+      <div class="card">
+        <div class="card-accent food"></div>
+        <div class="card-head"><div class="card-name">Sun Garden Cafe</div><div class="card-stars"><span class="star-fill">★</span><span class="rating-num">4.7</span></div></div>
+        <div class="card-type">Breakfast / Brunch · 210 Avenida Madera, Village</div>
+        <div class="card-desc">One of the island's most beloved breakfast spots — outdoor tropical setting, consistently fresh food, and large portions. Sweet potato pancakes and brisket skillets are the go-tos. Arrive early or expect a 15-minute wait. Families return here daily on long stays.</div>
+        <div class="card-footer"><span class="tag dist">~2.5 mi</span><span class="tag hot">🌟 Island staple</span><span class="tag kid">Kid-friendly</span><span class="tag">7:30 AM – 1:30 PM</span><a class="card-link" href="https://maps.google.com/?q=Sun+Garden+Cafe+Siesta+Key" target="_blank">Map →</a></div>
+      </div>
+      <div class="card">
+        <div class="card-accent food"></div>
+        <div class="card-head"><div class="card-name">Village Cafe</div><div class="card-stars"><span class="star-fill">★</span><span class="rating-num">4.7</span></div></div>
+        <div class="card-type">Breakfast · 5133 Ocean Blvd</div>
+        <div class="card-desc">Family-owned gem known for its homemade biscuits and brisket skillet. The owner is always on-site and the vibe is warm and welcoming. Great cappuccinos. Handled a party of 11 like it was nothing.</div>
+        <div class="card-footer"><span class="tag dist">~2.6 mi</span><span class="tag hot">🥐 Homemade biscuits</span><span class="tag">7:30 AM – 2 PM</span><a class="card-link" href="https://maps.google.com/?q=Village+Cafe+Siesta+Key" target="_blank">Map →</a></div>
+      </div>
+    </div>
+  </div>
+  <div id="activity" class="cat-group">
+    <div class="cat-header"><div class="cat-icon activity">🏄</div><div class="cat-title">Afternoon Activity</div></div>
+    <div class="cards">
+      <div class="card">
+        <div class="card-accent activity"></div>
+        <div class="card-head"><div class="card-name">Fun Boat Tours</div><div class="card-stars"><span class="star-fill">★</span><span class="rating-num">4.9</span></div></div>
+        <div class="card-type">Dolphin + Sunset Cruise · 1265 Old Stickney Point Rd</div>
+        <div class="card-desc">Highly rated dolphin and sunset tours departing right near your rental. Guides are knowledgeable and make it genuinely fun — karaoke on the return trip is a crowd favorite. Book online in advance for July. Kids absolutely love it.</div>
+        <div class="card-footer"><span class="tag dist">~0.1 mi</span><span class="tag hot">🐬 Dolphin sightings</span><span class="tag kid">Family cruise</span><a class="card-link" href="https://maps.google.com/?q=Fun+Boat+Tours+Siesta+Key" target="_blank">Map →</a></div>
+      </div>
+      <div class="card">
+        <div class="card-accent activity"></div>
+        <div class="card-head"><div class="card-name">Siesta Key Watersports</div><div class="card-stars"><span class="star-fill">★</span><span class="rating-num">4.9</span></div></div>
+        <div class="card-type">Sunset Cruise + More · 5253 S Tamiami Trail</div>
+        <div class="card-desc">One of the most-reviewed tour operators in the area (8,700+ reviews). Sandbar stop, dolphin spotting, celebrity home narration along the waterway. VIP package gives priority boarding. Sunset cruise is the fan favorite.</div>
+        <div class="card-footer"><span class="tag dist">~1.8 mi</span><span class="tag hot">⭐ 4.9 / 8,700 reviews</span><span class="tag kid">All ages</span><a class="card-link" href="https://maps.google.com/?q=Siesta+Key+Watersports" target="_blank">Map →</a></div>
+      </div>
+    </div>
+  </div>
+  <div id="dinner" class="cat-group">
+    <div class="cat-header"><div class="cat-icon dinner">🍽</div><div class="cat-title">Dinner</div></div>
+    <div class="cards">
+      <div class="card">
+        <div class="card-accent dinner"></div>
+        <div class="card-head"><div class="card-name">Siesta Key Oyster Bar (SKOB)</div><div class="card-stars"><span class="star-fill">★</span><span class="rating-num">4.5</span></div></div>
+        <div class="card-type">Seafood + Bar · 5238 Ocean Blvd</div>
+        <div class="card-desc">The quintessential Siesta Key bar experience. Oysters, grouper reubens, live music every single day. Happy hour oysters 3–6 PM at $12/dozen. Loud, fun, and totally worth it at least once. Sunday brunch starts at 9 AM.</div>
+        <div class="card-footer"><span class="tag dist">~2.5 mi</span><span class="tag hot">🎵 Live music daily</span><span class="tag">Sun opens 9 AM</span><a class="card-link" href="https://maps.google.com/?q=Siesta+Key+Oyster+Bar" target="_blank">Map →</a></div>
+      </div>
+      <div class="card">
+        <div class="card-accent dinner"></div>
+        <div class="card-head"><div class="card-name">Flavio's Brick Oven Pizza & Bar</div><div class="card-stars"><span class="star-fill">★</span><span class="rating-num">4.3</span></div></div>
+        <div class="card-type">Italian · 5239 Ocean Blvd, Village</div>
+        <div class="card-desc">Brick oven pizza and Italian dishes in the Village. Fun, buzzy atmosphere with good cocktails. Alessandro is frequently mentioned by name as a great server. A nice change from typical beach food.</div>
+        <div class="card-footer"><span class="tag dist">~2.4 mi</span><span class="tag">🍕 Brick oven Italian</span><span class="tag">Opens 4 PM</span><a class="card-link" href="https://maps.google.com/?q=Flavio's+Pizza+Siesta+Key" target="_blank">Map →</a></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════
+     DAY 3 — TUE JUNE 30
+══════════════════════════════════ -->
+<div id="day3" class="day-section">
+  <div class="day-header">
+    <div class="day-number">3</div>
+    <div class="day-info">
+      <div class="day-date">Tuesday, June 30</div>
+      <div class="day-title">Kayak Morning + Beach Afternoon</div>
+      <div class="day-note">Get on the water early before the Gulf heats up, then a relaxed afternoon on the sand.</div>
+    </div>
+  </div>
+  <div id="bfast" class="cat-group">
+    <div class="cat-header"><div class="cat-icon food">🥞</div><div class="cat-title">Breakfast</div></div>
+    <div class="cards">
+      <div class="card">
+        <div class="card-accent food"></div>
+        <div class="card-head"><div class="card-name">Toasted Mango Cafe</div><div class="card-stars"><span class="star-fill">★</span><span class="rating-num">4.6</span></div></div>
+        <div class="card-type">Brunch · 6621 Midnight Pass Rd</div>
+        <div class="card-desc">Award-winning mango waffles and three-cheese omelets right on Midnight Pass Rd. The waffles are light, fluffy, and topped with fresh mango butter — worth every calorie. Great mimosas for the adults. Opens 7:30 AM, gets busy fast.</div>
+        <div class="card-footer"><span class="tag dist">~0.1 mi</span><span class="tag close">📍 Near rental</span><span class="tag hot">🧇 Famous waffles</span><span class="tag">7:30 AM – 2:30 PM</span><a class="card-link" href="https://maps.google.com/?q=Toasted+Mango+Cafe+Siesta+Key" target="_blank">Map →</a></div>
+      </div>
+    </div>
+  </div>
+  <div id="activity" class="cat-group">
+    <div class="cat-header"><div class="cat-icon activity">🏄</div><div class="cat-title">Morning Activity</div></div>
+    <div class="cards">
+      <div class="card">
+        <div class="card-accent activity"></div>
+        <div class="card-head"><div class="card-name">SURFIT USA – Kayak & Paddleboard Tours</div><div class="card-stars"><span class="star-fill">★</span><span class="rating-num">5.0</span></div></div>
+        <div class="card-type">Tours · 8701 Blind Pass Rd</div>
+        <div class="card-desc">A perfect 5.0 with 3,100+ reviews. Guided kayak tours through mangroves, hidden beach stops for shell collecting and shark teeth finds, manatee and dolphin sightings. Guides Aaron and Orion are raved about by name. Great for kids who can manage a paddle.</div>
+        <div class="card-footer"><span class="tag dist">~2.6 mi</span><span class="tag hot">⭐ Perfect rating</span><span class="tag kid">Manatees + dolphins</span><span class="tag">8 AM – 5 PM</span><a class="card-link" href="https://maps.google.com/?q=SURFIT+USA+Siesta+Key" target="_blank">Map →</a></div>
+      </div>
+      <div class="card">
+        <div class="card-accent activity"></div>
+        <div class="card-head"><div class="card-name">Ride & Paddle / Siesta Sports Rentals</div><div class="card-stars"><span class="star-fill">★</span><span class="rating-num">4.9</span></div></div>
+        <div class="card-type">Kayak + Bike Rentals · 6551 Midnight Pass Rd</div>
+        <div class="card-desc">Right near your rental. Self-guided and guided kayak options with easy launch access. Staff brings kayaks to the water so you don't haul anything. Manatee sightings at low tide are common here.</div>
+        <div class="card-footer"><span class="tag dist">~0.1 mi</span><span class="tag close">📍 Near rental</span><span class="tag">9 AM – 5 PM</span><a class="card-link" href="https://maps.google.com/?q=Ride+and+Paddle+Siesta+Key" target="_blank">Map →</a></div>
+      </div>
+    </div>
+  </div>
+  <div id="lunch" class="cat-group">
+    <div class="cat-header"><div class="cat-icon food">🌮</div><div class="cat-title">Lunch</div></div>
+    <div class="cards">
+      <div class="card">
+        <div class="card-accent food"></div>
+        <div class="card-head"><div class="card-name">Siesta Beach Eats</div><div class="card-stars"><span class="star-fill">★</span><span class="rating-num">4.0</span></div></div>
+        <div class="card-type">Beach Concession · 948 Beach Rd</div>
+        <div class="card-desc">Right on Siesta Beach. Breakfast until 11, then nachos, burgers, frozen margaritas, and the Bloody Mary that "hits the spot like nothing else." Perfect "we're not leaving the beach" option for a hot afternoon.</div>
+        <div class="card-footer"><span class="tag dist">~1.4 mi</span><span class="tag">🏖 On the beach</span><span class="tag">8 AM – 6 PM</span><a class="card-link" href="https://maps.google.com/?q=Siesta+Beach+Eats" target="_blank">Map →</a></div>
+      </div>
+      <div class="card">
+        <div class="card-accent food"></div>
+        <div class="card-head"><div class="card-name">Island House Tap & Grill</div><div class="card-stars"><span class="star-fill">★</span><span class="rating-num">4.4</span></div></div>
+        <div class="card-type">Gastropub · 5110 Ocean Blvd, Village</div>
+        <div class="card-desc">Scratch kitchen in the Village with great local craft beers on tap. Sweet potato tacos are a sleeper hit. Ask for the locals discount. Small spot with mostly outdoor seating — very casual island vibe.</div>
+        <div class="card-footer"><span class="tag dist">~2.6 mi</span><span class="tag">🍺 Local craft beers</span><span class="tag">Opens 11 AM</span><a class="card-link" href="https://maps.google.com/?q=Island+House+Tap+and+Grill+Siesta+Key" target="_blank">Map →</a></div>
+      </div>
+    </div>
+  </div>
+  <div id="dinner" class="cat-group">
+    <div class="cat-header"><div class="cat-icon dinner">🍽</div><div class="cat-title">Dinner</div></div>
+    <div class="home-dinner">
+      <h4>🏠 Great Night to Cook In</h4>
+      <p>After an active water day, a relaxed home dinner is just right. Publix has excellent fresh seafood at the deli counter — grouper, shrimp, or marinated fish for the grill. Pick up sides at Morton's or Crescent Beach Market on the way back.</p>
+      <div class="grocery-note">🦐 Publix deli (~1.1 mi) has pre-marinated fish, shrimp cocktail, and prepared sides — easy crowd dinner for 9 people.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════
+     DAY 4 — WED JULY 1
+══════════════════════════════════ -->
+<div id="day4" class="day-section">
+  <div class="day-header">
+    <div class="day-number">4</div>
+    <div class="day-info">
+      <div class="day-date">Wednesday, July 1</div>
+      <div class="day-title">Italian Dinner Night + Mini Golf</div>
+      <div class="day-note">Afternoon mini golf adventure, then a proper Italian sit-down dinner. Food Truck Festival starts today too!</div>
+    </div>
+  </div>
+  <div id="bfast" class="cat-group">
+    <div class="cat-header"><div class="cat-icon food">🥞</div><div class="cat-title">Breakfast</div></div>
+    <div class="cards">
+      <div class="card">
+        <div class="card-accent food"></div>
+        <div class="card-head"><div class="card-name">Another Broken Egg Cafe</div><div class="card-stars"><span class="star-fill">★</span><span class="rating-num">4.6</span></div></div>
+        <div class="card-type">Brunch · 140 Avenida Messina, Village</div>
+        <div class="card-desc">Nearly 3,000 reviews and a 4.6. Southern chorizo scramble, chicken and waffles with chipotle honey sauce, gumbo, and a solid mimosa menu. Both indoor and outdoor shaded seating. Great if the Village visit overlaps with breakfast.</div>
+        <div class="card-footer"><span class="tag dist">~2.5 mi</span><span class="tag">Opens 7 AM</span><span class="tag kid">Good variety</span><a class="card-link" href="https://maps.google.com/?q=Another+Broken+Egg+Siesta+Key" target="_blank">Map →</a></div>
+      </div>
+    </div>
+  </div>
+  <div id="activity" class="cat-group">
+    <div class="cat-header"><div class="cat-icon activity">🏄</div><div class="cat-title">Activity</div></div>
+    <div class="cards">
+      <div class="card">
+        <div class="card-accent activity"></div>
+        <div class="card-head"><div class="card-name">Smugglers Cove Adventure Golf</div><div class="card-stars"><span class="star-fill">★</span><span class="rating-num">4.6</span></div></div>
+        <div class="card-type">Mini Golf · 3815 N Tamiami Trail</div>
+        <div class="card-desc">Consistently called the best mini golf in the Sarasota area. Course runs over bridges over water, through artificial caves, with a pirate theme throughout — and you feed live alligators at the end. European reviewers say it's the best they've ever played. Cup holders everywhere for the adults.</div>
+        <div class="card-footer"><span class="tag dist">~8.1 mi (~15 min)</span><span class="tag hot">🐊 Feed live gators!</span><span class="tag kid">Perfect for all ages</span><span class="tag">9 AM – 11 PM</span><a class="card-link" href="https://maps.google.com/?q=Smugglers+Cove+Adventure+Golf+Sarasota" target="_blank">Map →</a></div>
+      </div>
+      <div class="card">
+        <div class="card-accent activity"></div>
+        <div class="card-head"><div class="card-name">PopStroke Sarasota</div><div class="card-stars"><span class="star-fill">★</span><span class="rating-num">4.4</span></div></div>
+        <div class="card-type">Mini Golf + Bar · 195 University Town Center Dr</div>
+        <div class="card-desc">Two 18-hole courses, bar at the halfway mark, ice cream, and a swing set for the little ones while parents putt. Adults get a solid night out while kids are fully occupied. Good evening option especially if you're over near UTC already.</div>
+        <div class="card-footer"><span class="tag dist">~10.3 mi (~20 min)</span><span class="tag">🍦 Ice cream on-site</span><span class="tag kid">Swing set for toddlers</span><span class="tag">9 AM – 11 PM</span><a class="card-link" href="https://maps.google.com/?q=PopStroke+Sarasota" target="_blank">Map →</a></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 4th of July weekend event banner -->
+  <div class="event-banner">
+    <h4>🎉 4th of July Weekend Event: Suncoast's Largest Food Truck Festival</h4>
+    <p>40+ food truck vendors, live music, and a family fun zone at The Mall at University Town Center (~10.4 mi / ~20 min). Free entry and parking. Tonight is the opening night: <strong>Wednesday July 1, 2 PM – 7 PM</strong>. Continues Thu 7/2 (12–6 PM) and Fri 7/3 (3–9 PM with fireworks Friday night). Great way to let the kids graze while adults try global food. Especially worth it on the way to/from PopStroke since UTC is right there.</p>
+    <div class="ev-meta">
+      <span class="ev-tag">📍 140 University Town Center Dr</span>
+      <span class="ev-tag">🆓 Free entry + parking</span>
+      <span class="ev-tag">👨‍👩‍👧‍👦 Family-friendly</span>
+      <span class="ev-tag">Wed 2–7 PM</span>
+    </div>
+  </div>
+
+  <div id="dinner" class="cat-group">
+    <div class="cat-header"><div class="cat-icon dinner">🍽</div><div class="cat-title">Dinner — Italian Night</div></div>
+    <div class="cards">
+      <div class="card">
+        <div class="card-accent dinner"></div>
+        <div class="card-head"><div class="card-name">Café Gabbiano</div><div class="card-stars"><span class="star-fill">★</span><span class="rating-num">4.6</span></div></div>
+        <div class="card-type">Italian Fine Dining · 5104 Ocean Blvd, Village</div>
+        <div class="card-desc">The Italian restaurant on Siesta Key. In-house pasta, truffle ravioli that guests rave about long after leaving, and a wine cellar dining room. Vibrant, not quiet — but that energy is exactly what a group dinner needs. Reserve ahead for July.</div>
+        <div class="card-footer"><span class="tag dist">~2.6 mi</span><span class="tag hot">🍝 Best Italian on key</span><span class="tag wallet">Reserve ahead</span><span class="tag">Opens 5 PM</span><a class="card-link" href="https://maps.google.com/?q=Cafe+Gabbiano+Siesta+Key" target="_blank">Map →</a></div>
+      </div>
+      <div class="card">
+        <div class="card-accent dinner"></div>
+        <div class="card-head"><div class="card-name">Bruschetta Fine Italian</div><div class="card-stars"><span class="star-fill">★</span><span class="rating-num">4.9</span></div></div>
+        <div class="card-type">Authentic Italian · 6587 Gateway Ave</div>
+        <div class="card-desc">Owner Olga runs this as if she's hosting family for dinner — and her guests feel exactly that. 4-cheese ravioli with vodka sauce, house limoncello. Small, intimate, nearly perfect rating. Reserve well in advance — it books up fast in summer.</div>
+        <div class="card-footer"><span class="tag dist">~1.2 mi</span><span class="tag hot">⭐ 4.9 rating</span><span class="tag wallet">Reserve early!</span><span class="tag">Opens 4 PM</span><a class="card-link" href="https://maps.google.com/?q=Bruschetta+Italian+Sarasota" target="_blank">Map →</a></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════
+     DAY 5 — THU JULY 2
+══════════════════════════════════ -->
+<div id="day5" class="day-section">
+  <div class="day-header">
+    <div class="day-number">5</div>
+    <div class="day-info">
+      <div class="day-date">Thursday, July 2</div>
+      <div class="day-title">Bike Day + Food Truck Festival</div>
+      <div class="day-note">Rent bikes and explore the key, food truck festival in the afternoon, relaxed evening.</div>
+    </div>
+  </div>
+  <div id="bfast" class="cat-group">
+    <div class="cat-header"><div class="cat-icon food">🥞</div><div class="cat-title">Breakfast</div></div>
+    <div class="cards">
+      <div class="card">
+        <div class="card-accent food"></div>
+        <div class="card-head"><div class="card-name">Parlor Doughnuts + Mojo Risin'</div><div class="card-stars"><span class="star-fill">★</span><span class="rating-num">4.9</span></div></div>
+        <div class="card-type">Donuts + Coffee · Village</div>
+        <div class="card-desc">Make a morning of the Village — donuts at Parlor, coffee at Mojo Risin'. The kids will remember the Parlor donuts all trip. Pick up a box to go for the bike ride, or eat there before heading out on wheels.</div>
+        <div class="card-footer"><span class="tag dist">~2.5–2.6 mi</span><span class="tag hot">🍩 The kids' favorite</span><span class="tag">7 AM – 2 PM</span><a class="card-link" href="https://maps.google.com/?q=Parlor+Doughnuts+Siesta+Key" target="_blank">Map →</a></div>
+      </div>
+    </div>
+  </div>
+  <div id="activity" class="cat-group">
+    <div class="cat-header"><div class="cat-icon activity">🏄</div><div class="cat-title">Morning Activity</div></div>
+    <div class="cards">
+      <div class="card">
+        <div class="card-accent activity"></div>
+        <div class="card-head"><div class="card-name">Siesta Key Bike & Kayak</div><div class="card-stars"><span class="star-fill">★</span><span class="rating-num">4.8</span></div></div>
+        <div class="card-type">Bike Rentals · 1224 Old Stickney Point Rd</div>
+        <div class="card-desc">Rent bikes and explore the key at your own pace before the heat peaks. e-Bikes available so adults can keep up with teenagers and still enjoy themselves. Great for a morning lap of the key as a family group.</div>
+        <div class="card-footer"><span class="tag dist">~0.1 mi</span><span class="tag close">📍 Near rental</span><span class="tag kid">Family ride</span><span class="tag">9 AM – 5 PM</span><a class="card-link" href="https://maps.google.com/?q=Siesta+Key+Bike+and+Kayak" target="_blank">Map →</a></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Event banner Thu -->
+  <div class="event-banner">
+    <h4>🎉 4th of July Weekend Event: Food Truck Festival — Day 2</h4>
+    <p>The Suncoast's Largest Food Truck Festival continues today at UTC. <strong>Thursday July 2, 12 PM – 6 PM.</strong> 40+ vendors, family fun zone. Free entry and parking. Combine this with a PopStroke visit since you're already out near UTC, or make it an afternoon excursion with the group.</p>
+    <div class="ev-meta">
+      <span class="ev-tag">📍 140 University Town Center Dr (~10.4 mi)</span>
+      <span class="ev-tag">🆓 Free entry</span>
+      <span class="ev-tag">Thu 12–6 PM</span>
+    </div>
+  </div>
+
+  <div id="lunch" class="cat-group">
+    <div class="cat-header"><div class="cat-icon food">🌮</div><div class="cat-title">Lunch</div></div>
+    <div class="cards">
+      <div class="card">
+        <div class="card-accent food"></div>
+        <div class="card-head"><div class="card-name">Ripfire Pizza</div><div class="card-stars"><span class="star-fill">★</span><span class="rating-num">4.5</span></div></div>
+        <div class="card-type">Pizza · 5218 Ocean Blvd, Village</div>
+        <div class="card-desc">Italian 00-flour crust pizza in the Village with great outdoor seating perfect for the beach crowd. Build-your-own with up to 7 toppings, or go with the smoked chicken. Relaxed, lively, and reasonably priced — a solid midday stop.</div>
+        <div class="card-footer"><span class="tag dist">~2.5 mi</span><span class="tag">🍕 Italian-flour crust</span><span class="tag">Opens 11 AM</span><a class="card-link" href="https://maps.google.com/?q=Ripfire+Pizza+Siesta+Key" target="_blank">Map →</a></div>
+      </div>
+    </div>
+  </div>
+  <div id="dinner" class="cat-group">
+    <div class="cat-header"><div class="cat-icon dinner">🍽</div><div class="cat-title">Dinner</div></div>
+    <div class="cards">
+      <div class="card">
+        <div class="card-accent dinner"></div>
+        <div class="card-head"><div class="card-name">The Cottage</div><div class="card-stars"><span class="star-fill">★</span><span class="rating-num">4.6</span></div></div>
+        <div class="card-type">American · 153 Avenida Messina, Village</div>
+        <div class="card-desc">Fun vibe, live entertainment, and a creative menu. The lobster bisque is the must-order. Short rib bites, wagyu beef tapas, and excellent burgers round it out. A perfect pre-holiday-weekend dinner in the Village.</div>
+        <div class="card-footer"><span class="tag dist">~2.6 mi</span><span class="tag hot">🎵 Live entertainment</span><span class="tag">Opens 11 AM</span><a class="card-link" href="https://maps.google.com/?q=The+Cottage+Siesta+Key" target="_blank">Map →</a></div>
+      </div>
+      <div class="card">
+        <div class="card-accent dinner"></div>
+        <div class="card-head"><div class="card-name">Home Dinner Option</div></div>
+        <div class="card-desc">Pre-holiday night — cook in and rest up. Grill burgers or a big pasta on the patio with the group. Publix or Crescent Beach Market run before dinner keeps it simple and budget-friendly heading into a busy weekend.</div>
+        <div class="card-footer"><span class="tag">🏠 Relaxed option</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════
+     DAY 6 — FRI JULY 3
+══════════════════════════════════ -->
+<div id="day6" class="day-section">
+  <div class="day-header">
+    <div class="day-number">6</div>
+    <div class="day-info">
+      <div class="day-date">Friday, July 3</div>
+      <div class="day-title">Private Boat Day + Food Truck Festival Night</div>
+      <div class="day-note">Get on the water early, then hit the Food Truck Festival in the evening with fireworks!</div>
+    </div>
+  </div>
+  <div id="bfast" class="cat-group">
+    <div class="cat-header"><div class="cat-icon food">🥞</div><div class="cat-title">Breakfast</div></div>
+    <div class="cards">
+      <div class="card">
+        <div class="card-accent food"></div>
+        <div class="card-head"><div class="card-name">Toasted Mango Cafe</div><div class="card-stars"><span class="star-fill">★</span><span class="rating-num">4.6</span></div></div>
+        <div class="card-type">Brunch · 6621 Midnight Pass Rd</div>
+        <div class="card-desc">Back for the waffles — this is the closest full-service breakfast to your rental and one of the best on the island. Early start before a boat tour: get there when it opens at 7:30 and you'll be on the water by 9.</div>
+        <div class="card-footer"><span class="tag dist">~0.1 mi</span><span class="tag close">📍 Near rental</span><span class="tag hot">🧇 Famous waffles</span><span class="tag">7:30 AM – 2:30 PM</span><a class="card-link" href="https://maps.google.com/?q=Toasted+Mango+Cafe+Siesta+Key" target="_blank">Map →</a></div>
+      </div>
+    </div>
+  </div>
+  <div id="activity" class="cat-group">
+    <div class="cat-header"><div class="cat-icon activity">🏄</div><div class="cat-title">Morning Activity</div></div>
+    <div class="cards">
+      <div class="card">
+        <div class="card-accent activity"></div>
+        <div class="card-head"><div class="card-name">Happy Go Lucky Charter</div><div class="card-stars"><span class="star-fill">★</span><span class="rating-num">5.0</span></div></div>
+        <div class="card-type">Private Boat Charter · Based in Sarasota</div>
+        <div class="card-desc">Captain Joe runs small-group charters that feel like a private trip — celebrity waterfront homes, dolphins, sea turtle sightings, a tiki bar stop, and tubing for the kids. Perfect 5.0 rating. This is the day to do it, before the 4th crowds arrive.</div>
+        <div class="card-footer"><span class="tag dist">~3.4 mi</span><span class="tag hot">⭐ 5.0 · Private feel</span><span class="tag kid">Tubing for kids</span><a class="card-link" href="https://maps.google.com/?q=Happy+Go+Lucky+Boat+Sarasota" target="_blank">Map →</a></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Event banner Fri 7/3 -->
+  <div class="event-banner">
+    <h4>🎉 4th of July Weekend Event: Food Truck Festival + Fireworks — Night 3</h4>
+    <p>The best night of the Food Truck Festival: <strong>Friday July 3, 4 PM – 9 PM</strong> at UTC, ending with a <strong>fireworks display Friday night</strong>. 40+ vendors, family fun zone, live vibes. Free entry and parking. A perfect pre-4th celebration that avoids the insane Siesta Key crowds on the 4th itself. About 10.4 miles from your rental (~20 min drive).</p>
+    <div class="ev-meta">
+      <span class="ev-tag">📍 140 University Town Center Dr</span>
+      <span class="ev-tag">🆓 Free entry</span>
+      <span class="ev-tag">🎆 Fireworks Friday night!</span>
+      <span class="ev-tag">Fri 4–9 PM</span>
+    </div>
+  </div>
+
+  <div id="dinner" class="cat-group">
+    <div class="cat-header"><div class="cat-icon dinner">🍽</div><div class="cat-title">Dinner — Special Night</div></div>
+    <div class="cards">
+      <div class="card">
+        <div class="card-accent dinner"></div>
+        <div class="card-head"><div class="card-name">Siesta Key Summer House</div><div class="card-stars"><span class="star-fill">★</span><span class="rating-num">4.7</span></div></div>
+        <div class="card-type">Steak & Seafood · 149 Avenida Messina, Village</div>
+        <div class="card-desc">The best upscale dinner on the key. Wagyu tartare, 40 oz porterhouse, fresh oysters, and a seafood foam margarita made with Siesta Key sea salt. Polished service, elegant but not stuffy. The Friday before 4th is a great night for this — book NOW, it fills fast.</div>
+        <div class="card-footer"><span class="tag dist">~2.6 mi</span><span class="tag hot">⭐ Best on the key</span><span class="tag wallet">Reserve immediately!</span><span class="tag">Opens 4 PM</span><a class="card-link" href="https://maps.google.com/?q=Summer+House+Steak+Seafood+Siesta+Key" target="_blank">Map →</a></div>
+      </div>
+      <div class="card">
+        <div class="card-accent dinner"></div>
+        <div class="card-head"><div class="card-name">Or — Food Trucks at UTC</div></div>
+        <div class="card-desc">If you do the Food Truck Festival tonight, dinner IS the event. 40+ vendors with food from around the world followed by fireworks. The kids can graze on whatever they want — easy win for a large group with different tastes.</div>
+        <div class="card-footer"><span class="tag dist">~10.4 mi</span><span class="tag">🆓 Free event</span><span class="tag">Fri 4–9 PM</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════
+     DAY 7 — SAT JULY 4
+══════════════════════════════════ -->
+<div id="day7" class="day-section">
+  <div class="day-header">
+    <div class="day-number">🎆</div>
+    <div class="day-info">
+      <div class="day-date">Saturday, July 4th</div>
+      <div class="day-title">Independence Day — America's 250th</div>
+      <div class="day-note">35th annual Siesta Key fireworks tonight at ~9:15 PM, celebrating America's 250th birthday. Restaurants will be extremely packed — plan ahead or cook in and walk to the beach.</div>
+    </div>
+  </div>
+
+  <!-- Fireworks banner -->
+  <div class="event-banner" style="margin-bottom: 20px;">
+    <h4>🎆 35th Annual Siesta Key Fireworks — America's 250th Birthday</h4>
+    <p>Fireworks launch at approximately 9:15 PM from just north of the volleyball courts at Siesta Public Beach. Viewable from anywhere along Crescent Beach — including <strong>a short walk from your rental</strong>. 20,000–30,000 people attend. Stake your beach spot by 7:30 PM. Do not bring personal fireworks. The event runs 8:00–9:30 PM.</p>
+    <div class="ev-meta">
+      <span class="ev-tag">📍 Walk from rental!</span>
+      <span class="ev-tag">🆓 Free</span>
+      <span class="ev-tag">Fireworks ~9:15 PM</span>
+      <span class="ev-tag">Beach spot by 7:30</span>
+    </div>
+  </div>
+
+  <!-- Star-Spangled Spectacular -->
+  <div class="event-banner" style="margin-bottom: 20px;">
+    <h4>🎪 Star-Spangled Spectacular at Waterside Place</h4>
+    <p>A massive family-friendly 4th of July celebration in Lakewood Ranch. <strong>Sat July 4, 6–9 PM.</strong> Jaw-dropping circus acts, carnival games, kids' zone, local food vendors, and a grand finale drone show at 9 PM. Magic & mentalism show at 7 PM, Circus Arts Conservatory at 8 PM. Free to attend, bring a lawn chair. Complimentary trolley runs 5:30–10 PM. If you want an alternative to the beach fireworks (or want to start there and drive back for the Siesta Key fireworks), this is the event.</p>
+    <div class="ev-meta">
+      <span class="ev-tag">📍 Waterside Place, Lakewood Ranch (~10.4 mi)</span>
+      <span class="ev-tag">🆓 Free</span>
+      <span class="ev-tag">🎪 Circus + drone show</span>
+      <span class="ev-tag">Sat 6–9 PM</span>
+    </div>
+  </div>
+
+  <div id="bfast" class="cat-group">
+    <div class="cat-header"><div class="cat-icon coffee">☕</div><div class="cat-title">Morning Coffee</div></div>
+    <div class="cards">
+      <div class="card">
+        <div class="card-accent coffee"></div>
+        <div class="card-head"><div class="card-name">Mojo Risin' Coffee Co.</div><div class="card-stars"><span class="star-fill">★</span><span class="rating-num">4.6</span></div></div>
+        <div class="card-type">Café · 5251 Ocean Blvd</div>
+        <div class="card-desc">Expect extra crowds on the 4th. Go early (before 8 AM) to beat the rush. Grab coffees and açaí bowls to go and head straight to the beach for the best spots before it fills up.</div>
+        <div class="card-footer"><span class="tag dist">~2.4 mi</span><span class="tag hot">⚠️ Go early on 4th</span><span class="tag">7 AM – 5 PM</span><a class="card-link" href="https://maps.google.com/?q=Mojo+Risin+Coffee+Siesta+Key" target="_blank">Map →</a></div>
+      </div>
+      <div class="card">
+        <div class="card-accent coffee"></div>
+        <div class="card-head"><div class="card-name">Crescent Beach Market</div><div class="card-stars"><span class="star-fill">★</span><span class="rating-num">4.7</span></div></div>
+        <div class="card-type">Market · 1211 Old Stickney Point Rd</div>
+        <div class="card-desc">The easy option on a chaotic morning — walk over, grab coffees and breakfast sandwiches, and skip the Village traffic entirely. Good call if you want to stay close to home on the 4th.</div>
+        <div class="card-footer"><span class="tag dist">~0.1 mi</span><span class="tag close">📍 Walkable</span><span class="tag">8 AM – 8 PM</span><a class="card-link" href="https://maps.google.com/?q=Crescent+Beach+Market+Siesta+Key" target="_blank">Map →</a></div>
+      </div>
+    </div>
+  </div>
+  <div id="lunch" class="cat-group">
+    <div class="cat-header"><div class="cat-icon food">🌮</div><div class="cat-title">Lunch</div></div>
+    <div class="cards">
+      <div class="card">
+        <div class="card-accent food"></div>
+        <div class="card-head"><div class="card-name">Old Salty Dog</div><div class="card-stars"><span class="star-fill">★</span><span class="rating-num">4.3</span></div></div>
+        <div class="card-type">Fish & Chips · 5023 Ocean Blvd</div>
+        <div class="card-desc">Classic Florida beach bar. Fish and chips, hot dogs, the Maui Wow-Wee pineapple burger. Dog-friendly, casual, zero fuss. Good midday lunch before staking out your beach spot for the evening fireworks. Expect long waits on the 4th — go early (11 AM–noon).</div>
+        <div class="card-footer"><span class="tag dist">~2.6 mi</span><span class="tag">🐟 Classic beach bar</span><span class="tag">⚠️ Go early for 4th</span><a class="card-link" href="https://maps.google.com/?q=Old+Salty+Dog+Siesta+Key" target="_blank">Map →</a></div>
+      </div>
+    </div>
+  </div>
+  <div id="dinner" class="cat-group">
+    <div class="cat-header"><div class="cat-icon dinner">🍽</div><div class="cat-title">Dinner</div></div>
+    <div class="home-dinner">
+      <h4>🏠 Strong Recommendation: Cook In & Walk to Fireworks</h4>
+      <p>July 4th restaurants on Siesta Key will have 1–2+ hour waits. The smarter play: grill burgers, hot dogs, or brats at the rental, then walk down to Crescent Beach to stake out your fireworks spot. Bring beach chairs, the cooler, and snacks. The fireworks are at ~9:15 PM and visible from right near your rental — you're steps away from a perfect viewing spot without the crowds at the main beach.</p>
+      <div class="grocery-note">🎆 Crescent Beach south of the volleyball courts is your best viewing spot — a short walk from your rental. Arrive by 7:30 PM for a good location.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════
+     DAY 8 — SUN JULY 5 (DEPARTURE)
+══════════════════════════════════ -->
+<div id="day8" class="day-section">
+  <div class="day-header">
+    <div class="day-number">8</div>
+    <div class="day-info">
+      <div class="day-date">Sunday, July 5</div>
+      <div class="day-title">Last Morning — Make It Count</div>
+      <div class="day-note">One final beach walk, a proper farewell breakfast, and head home happy.</div>
+    </div>
+  </div>
+  <div id="bfast" class="cat-group">
+    <div class="cat-header"><div class="cat-icon food">🥞</div><div class="cat-title">Farewell Breakfast</div></div>
+    <div class="cards">
+      <div class="card">
+        <div class="card-accent food"></div>
+        <div class="card-head"><div class="card-name">Sun Garden Cafe</div><div class="card-stars"><span class="star-fill">★</span><span class="rating-num">4.7</span></div></div>
+        <div class="card-type">Breakfast · 210 Avenida Madera, Village</div>
+        <div class="card-desc">The perfect send-off. Go one more time and order whatever you didn't have the first visit. Families who make Siesta Key an annual tradition come here on the last morning every trip. Opens 7:30 AM.</div>
+        <div class="card-footer"><span class="tag dist">~2.5 mi</span><span class="tag hot">🌟 Perfect last meal</span><span class="tag">7:30 AM – 1:30 PM</span><a class="card-link" href="https://maps.google.com/?q=Sun+Garden+Cafe+Siesta+Key" target="_blank">Map →</a></div>
+      </div>
+      <div class="card">
+        <div class="card-accent food"></div>
+        <div class="card-head"><div class="card-name">Parlor Doughnuts — One More Time</div><div class="card-stars"><span class="star-fill">★</span><span class="rating-num">4.9</span></div></div>
+        <div class="card-type">Donuts · 5055 Ocean Blvd</div>
+        <div class="card-desc">The kids will ask for it. Get a box to go for the drive home — the croissant-donut texture holds up surprisingly well. Pick up a dozen and make the road trip a treat. Opens 7 AM.</div>
+        <div class="card-footer"><span class="tag dist">~2.6 mi</span><span class="tag kid">🍩 Road trip box</span><span class="tag">7 AM – 2 PM</span><a class="card-link" href="https://maps.google.com/?q=Parlor+Doughnuts+Siesta+Key" target="_blank">Map →</a></div>
+      </div>
+    </div>
+  </div>
+  <div class="tips-box" style="margin-top: 28px;">
+    <h4>🏡 Before You Leave</h4>
+    <ul>
+      <li>Crescent Beach Market (0.1 mi) — grab a final coffee and use up any leftover snack budget.</li>
+      <li>Traffic leaving Siesta Key on Sunday mornings in July: the Midnight Pass Rd / Stickney Point bridge gets backed up during rental changeover (around 10 AM). Leave before 9 AM or after noon to avoid it.</li>
+      <li>Take one last barefoot walk on the beach before loading the car. You'll be glad you did.</li>
+    </ul>
+  </div>
+</div>
+
+</div><!-- /container -->
+
+<div class="site-footer">
+  <strong>Siesta Key Family Guide · Jun 28 – Jul 5, 2026</strong><br>
+  Ratings from Google · Distances approximate from Midnight Pass Rd & Point of Rocks Rd · Confirm hours before going · Happy vacation! 🌊
+</div>
+
+<script>
+function showDay(id) {
+  document.querySelectorAll('.day-section').forEach(el => el.classList.remove('active'));
+  document.querySelectorAll('.day-btn').forEach(el => el.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  const ids = ['essentials','day1','day2','day3','day4','day5','day6','day7','day8'];
+  const idx = ids.indexOf(id);
+  if (idx >= 0) document.querySelectorAll('.day-btn')[idx].classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function jumpTo(cat) {
+  document.querySelectorAll('.ql-btn').forEach(b => b.classList.remove('active-ql'));
+  event.target.classList.add('active-ql');
+  const active = document.querySelector('.day-section.active');
+  if (!active) return;
+  const map = { coffee: ['coffee','☕'], bfast: ['breakfast','brunch','morning','🥞'], lunch: ['lunch','🌮'], dinner: ['dinner','🍽'], activity: ['activit','🏄'], grocery: ['grocery','🛒'] };
+  const terms = map[cat] || [];
+  const groups = active.querySelectorAll('.cat-group');
+  for (const grp of groups) {
+    const titleEl = grp.querySelector('.cat-title');
+    if (!titleEl) continue;
+    const t = titleEl.textContent.toLowerCase();
+    if (terms.some(term => t.includes(term))) {
+      grp.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      return;
+    }
+  }
+  if (cat === 'grocery') {
+    showDay('essentials');
+    setTimeout(() => { const el = document.getElementById('grocery'); if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 250);
+  }
+}
+</script>
+
+<script>
+  // Allow Enter key to submit
+  document.getElementById('pw-input').addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') checkPw();
+  });
+
+  function checkPw() {
+    const input = document.getElementById('pw-input');
+    const err   = document.getElementById('gate-err');
+    // Password stored obfuscated — simple btoa encoding
+    if (btoa(input.value) === btoa('sk26!')) {
+      document.getElementById('gate').style.display = 'none';
+      document.getElementById('main-content').style.display = 'block';
+      sessionStorage.setItem('sk_unlocked', '1');
+    } else {
+      err.textContent = 'Incorrect password — try again.';
+      input.classList.add('error');
+      input.value = '';
+      setTimeout(() => input.classList.remove('error'), 400);
+    }
+  }
+
+  function togglePw() {
+    const input = document.getElementById('pw-input');
+    input.type = input.type === 'password' ? 'text' : 'password';
+  }
+
+  // Stay unlocked within the same browser session
+  if (sessionStorage.getItem('sk_unlocked') === '1') {
+    document.getElementById('gate').style.display = 'none';
+    document.getElementById('main-content').style.display = 'block';
+  }
+</script>
+
+</div><!-- /#main-content -->
+</body>
+</html>
